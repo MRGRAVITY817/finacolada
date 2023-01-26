@@ -4,7 +4,7 @@ use {
     polars::prelude::*,
 };
 
-pub fn convert_xlsx_to_parquet<'a>(
+pub fn convert_sector_xlsx_to_parquet<'a>(
     input_xlsx_path: &'a str,
     output_parquet_path: &'a str,
 ) -> anyhow::Result<()> {
@@ -53,7 +53,7 @@ mod test {
         let input_path = "test.xlsx";
         let output_path = "converted.parquet";
         // Act
-        convert_xlsx_to_parquet(input_path, output_path).unwrap();
+        convert_sector_xlsx_to_parquet(input_path, output_path).unwrap();
         // Assert
         let lf = LazyFrame::scan_parquet(output_path, Default::default());
         assert!(lf.is_ok());
