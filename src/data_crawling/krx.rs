@@ -189,23 +189,24 @@ mod test {
         assert_yaml_snapshot!(test_xlsx_with_first_row(output_path).unwrap())
     }
 
-    // #[tokio::test]
-    // async fn download_sector_kosdaq_data() {
-    //     // Arrange
-    //     let client = reqwest::Client::new();
-    //     let otp = generate_krx_otp(
-    //         &client,
-    //         InfoType::Sector,
-    //         MarketType::Kosdaq,
-    //         TEST_TRADING_DATE,
-    //     )
-    //     .await
-    //     .unwrap();
-    //     // Act
-    //     let result = download_krx_data(&otp, &client).await.unwrap();
-    //     // Assert
-    //     assert_yaml_snapshot!(result)
-    // }
+    #[tokio::test]
+    async fn download_sector_kosdaq_data() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Sector,
+            MarketType::Kosdaq,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
+        let output_path = "examples/krx_sector_kosdaq.xlsx";
+        // Act
+        download_krx_data(&client, &otp, output_path).await.unwrap();
+        // Assert
+        assert_yaml_snapshot!(test_xlsx_with_first_row(output_path).unwrap())
+    }
 
     // #[tokio::test]
     // async fn download_individual_kospi_data() {
