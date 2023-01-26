@@ -1,10 +1,11 @@
 use {
+    anyhow::Result,
     regex::Regex,
     reqwest::Client,
     scraper::{Html, Selector},
 };
 
-pub async fn get_latest_working_date(query_client: &Client) -> Result<String, reqwest::Error> {
+pub async fn get_latest_working_date(query_client: &Client) -> Result<String> {
     let url = "https://finance.naver.com/sise/sise_deposit.naver";
     let html_text = query_client
         .get(url)
@@ -19,7 +20,7 @@ pub async fn get_latest_working_date(query_client: &Client) -> Result<String, re
     for selected in document.select(&selector) {
         let result = selected.inner_html();
         if result.len() > 0 {
-            let date_regex = Regex::new("[0-9]+.[0-9]+.[0-9]+").unwrap();
+            let date_regex = Regex::new("[0-9]+.[0-9]+.[0-9]+")?;
             if let Some(matched) = date_regex.find(&result) {
                 return Ok(matched.as_str().replace(".", ""));
             }
