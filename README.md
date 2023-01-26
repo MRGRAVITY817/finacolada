@@ -7,7 +7,7 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 
 ### Gathering data
 
-- [ ] Get the latest working date from _Naver Finance_.
+- [x] Get the latest biz day from _Naver Finance_.
 - [ ] Get WICS sector info from _WiseIndex_.
 - [ ] Get adjusted closing price.
 - [ ] Get daily stock price for individual issue, from _Naver Finance_.

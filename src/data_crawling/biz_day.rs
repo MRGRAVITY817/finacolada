@@ -5,7 +5,7 @@ use {
     scraper::{Html, Selector},
 };
 
-pub async fn get_latest_working_date(query_client: &Client) -> Result<String> {
+pub async fn get_latest_biz_day(query_client: &Client) -> Result<String> {
     let url = "https://finance.naver.com/sise/sise_deposit.naver";
     let html_text = query_client
         .get(url)
@@ -36,11 +36,11 @@ mod test {
     use {super::*, chrono::NaiveDate};
 
     #[tokio::test]
-    async fn fetched_working_date_is_valid_date() {
+    async fn fetched_biz_day_is_valid_date() {
         // Arrange
         let client = reqwest::Client::new();
         // Act
-        let result = get_latest_working_date(&client).await.unwrap();
+        let result = get_latest_biz_day(&client).await.unwrap();
         // Assert
         assert_eq!(result.len(), 8);
         assert!(NaiveDate::from_ymd_opt(
