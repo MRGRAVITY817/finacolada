@@ -1,9 +1,8 @@
 use {
+    crate::data_crawling::krx::KrxSectorRow,
     calamine::{open_workbook, DeError, RangeDeserializerBuilder, Reader, Xlsx},
     polars::prelude::*,
 };
-
-type KrxSectorRow = (String, String, String, String, u32, i32, f32, u64);
 
 pub fn convert_xlsx_to_parquet<'a>(
     input_xlsx_path: &'a str,
