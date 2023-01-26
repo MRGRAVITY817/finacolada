@@ -1,2 +1,2 @@
-pub mod get_krx_ind;
+pub mod krx;
 pub mod working_date;
