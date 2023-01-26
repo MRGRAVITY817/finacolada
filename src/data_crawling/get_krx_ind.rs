@@ -36,10 +36,10 @@ pub async fn get_krx_otp(
 
 #[cfg(test)]
 mod test {
-    use {super::*, reqwest};
+    use {super::*, insta::*, reqwest};
 
     #[tokio::test]
-    async fn get_generated_otp_for_kospi() {
+    async fn get_generated_otp_from_krx_for_kospi() {
         // Arrange
         let trading_date = "20210108";
         let client = reqwest::Client::new();
@@ -53,7 +53,7 @@ mod test {
     }
 
     #[tokio::test]
-    async fn get_generated_otp_for_kosdaq() {
+    async fn get_generated_otp_from_krx_for_kosdaq() {
         // Arrange
         let trading_date = "20210108";
         let client = reqwest::Client::new();
@@ -64,5 +64,20 @@ mod test {
             .unwrap();
         // Assert
         assert!(result.len() > 10)
+    }
+
+    #[tokio::test]
+    async fn download_sector_data_from_krx_for_kospi() {
+        // Arrange
+        let trading_date = "20210108";
+        let client = reqwest::Client::new();
+        let market_type = MarketType::Kospi;
+        let otp = get_krx_otp(trading_date, market_type, &client)
+            .await
+            .unwrap();
+        // Act
+        let result = get_sector_data(otp).await.unwrap();
+        // Assert
+        assert_yaml_snapshot!(result)
     }
 }
