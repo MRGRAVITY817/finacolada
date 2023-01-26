@@ -1,47 +1,68 @@
 use {
-    calamine::{open_workbook, RangeDeserializerBuilder, Reader, Xlsx},
+    calamine::{open_workbook, DeError, RangeDeserializerBuilder, Reader, Xlsx},
     polars::prelude::*,
 };
 
-pub fn save_xlsx_to_parquet(path: &str) -> anyhow::Result<String> {
-    let mut workbook: Xlsx<_> = open_workbook(path)?;
+type KrxSectorRow = (String, String, String, String, u32, i32, f32, u64);
+
+pub fn convert_xlsx_to_parquet<'a>(
+    input_xlsx_path: &'a str,
+    output_parquet_path: &'a str,
+) -> anyhow::Result<()> {
+    let mut workbook: Xlsx<_> = open_workbook(input_xlsx_path)?;
     let range = workbook
         .worksheet_range("Sheet1")
         .ok_or(calamine::Error::Msg("Cannot find 'Sheet1'"))??;
 
-    let mut iter = RangeDeserializerBuilder::new().from_range(&range)?;
+    let table = RangeDeserializerBuilder::new()
+        .from_range(&range)?
+        .collect::<Result<Vec<KrxSectorRow>, DeError>>()?;
 
-    while let Some(result) = iter.next() {
-        let (code, name, market_type, sector, end_value, relative, change_rate, net_value): (
-            String,
-            String,
-            String,
-            String,
-            u32,
-            i32,
-            f32,
-            u64,
-        ) = result?;
-        let mut df = df!(
-            "foo" => &[1, 2, 3],
-            "bar" => &[None, Some("bak"), Some("baz")],
-        );
-    }
+    let issue_code_data: Vec<String> = table.iter().map(|row| row.0.clone()).collect();
+    let issue_name_data: Vec<String> = table.iter().map(|row| row.1.clone()).collect();
+    let market_type_data: Vec<String> = table.iter().map(|row| row.2.clone()).collect();
+    let industry_name: Vec<String> = table.iter().map(|row| row.3.clone()).collect();
+    let end_value_data: Vec<u32> = table.iter().map(|row| row.4).collect();
+    let compared_data: Vec<i32> = table.iter().map(|row| row.5).collect();
+    let fluctuation_rate_data: Vec<f32> = table.iter().map(|row| row.6).collect();
+    let market_cap_data: Vec<u64> = table.iter().map(|row| row.7).collect();
 
-    Ok("result.parquet".to_string())
+    let mut df = df!(
+        "issue_code" => issue_code_data,
+        "issue_name" => issue_name_data,
+        "market_type" => market_type_data,
+        "industry" => industry_name,
+        "end_value" => end_value_data,
+        "compared" => compared_data,
+        "fluctuation_rate" => fluctuation_rate_data,
+        "market_cap" => market_cap_data
+    )?;
+
+    let mut file = std::fs::File::create(output_parquet_path)?;
+    ParquetWriter::new(&mut file).finish(&mut df)?;
+
+    Ok(())
 }
 
 #[cfg(test)]
 mod test {
-    use super::*;
+    use {super::*, insta::assert_snapshot};
 
     #[test]
     fn can_read_converted_parquet_as_lazyframe() {
         // Arrange
-        let path = "test.xlsx";
+        let input_path = "test.xlsx";
+        let output_path = "converted.parquet";
         // Act
-        let result_path = save_xlsx_to_parquet(path).unwrap();
+        convert_xlsx_to_parquet(input_path, output_path).unwrap();
         // Assert
-        assert!(LazyFrame::scan_parquet(result_path, Default::default()).is_ok())
+        let lf = LazyFrame::scan_parquet(output_path, Default::default());
+        assert!(lf.is_ok());
+        assert_snapshot!(lf
+            .unwrap()
+            .filter(col("end_value").gt(lit(10000)))
+            .collect()
+            .unwrap()
+            .to_string())
     }
 }
