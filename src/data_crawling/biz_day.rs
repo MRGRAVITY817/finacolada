@@ -33,7 +33,7 @@ pub async fn get_latest_biz_day(query_client: &Client) -> Result<String> {
 
 #[cfg(test)]
 mod test {
-    use {super::*, chrono::NaiveDate};
+    use {super::*, chrono::NaiveDate, insta::assert_snapshot};
 
     #[tokio::test]
     async fn fetched_biz_day_is_valid_date() {
@@ -42,6 +42,7 @@ mod test {
         // Act
         let result = get_latest_biz_day(&client).await.unwrap();
         // Assert
+        assert_snapshot!(result, @"20230120");
         assert_eq!(result.len(), 8);
         assert!(NaiveDate::from_ymd_opt(
             result[0..4].parse::<i32>().unwrap(),
