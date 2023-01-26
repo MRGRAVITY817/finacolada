@@ -1,5 +1,10 @@
 use {reqwest::Client, std::collections::HashMap};
 
+pub enum InfoType {
+    Sector,
+    Individual,
+}
+
 pub enum MarketType {
     Kospi,
     Kosdaq,
@@ -9,10 +14,11 @@ pub const GEN_OTP_URL: &'static str = "http://data.krx.co.kr/comm/fileDn/Generat
 pub const SECTOR_DOWNLOAD_URL: &'static str =
     "http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd";
 
-pub async fn get_krx_otp(
-    trading_date: &str,
-    market_type: MarketType,
+pub async fn generate_krx_otp(
     query_client: &Client,
+    info_type: InfoType,
+    market_type: MarketType,
+    trading_date: &str,
 ) -> Result<String, reqwest::Error> {
     let market_id = match market_type {
         MarketType::Kospi => "STK",
@@ -20,12 +26,24 @@ pub async fn get_krx_otp(
     };
 
     let mut params = HashMap::new();
-    params.insert("mktId", market_id);
-    params.insert("trdDd", trading_date);
-    params.insert("money", "1");
-    params.insert("csvxls_isNo", "false");
-    params.insert("name", "fileDown");
-    params.insert("url", "dbms/MDC/STAT/standard/MDCSTAT03901");
+    match info_type {
+        InfoType::Sector => {
+            params.insert("mktId", market_id);
+            params.insert("trdDd", trading_date);
+            params.insert("money", "1");
+            params.insert("csvxls_isNo", "false");
+            params.insert("name", "fileDown");
+            params.insert("url", "dbms/MDC/STAT/standard/MDCSTAT03901");
+        }
+        InfoType::Individual => {
+            params.insert("mktId", market_id);
+            params.insert("trdDd", trading_date);
+            params.insert("searchType", "1");
+            params.insert("csvxls_isNo", "false");
+            params.insert("name", "fileDown");
+            params.insert("url", "dbms/MDC/STAT/standard/MDCSTAT03501");
+        }
+    };
 
     query_client
         .post(GEN_OTP_URL)
@@ -62,7 +80,7 @@ mod test {
         let market_type = MarketType::Kospi;
         let info_type = InfoType::Sector;
         // Act
-        let result = get_krx_otp(&client, info_type, market_type, trading_date)
+        let result = generate_krx_otp(&client, info_type, market_type, trading_date)
             .await
             .unwrap();
         // Assert
@@ -75,8 +93,9 @@ mod test {
         let trading_date = "20210108";
         let client = reqwest::Client::new();
         let market_type = MarketType::Kosdaq;
+        let info_type = InfoType::Sector;
         // Act
-        let result = get_krx_otp(&client, info_type, market_type, trading_date)
+        let result = generate_krx_otp(&client, info_type, market_type, trading_date)
             .await
             .unwrap();
         // Assert
@@ -86,10 +105,11 @@ mod test {
     #[tokio::test]
     async fn download_sector_data_from_krx_for_kospi() {
         // Arrange
-        let trading_date = "20210108";
         let client = reqwest::Client::new();
+        let info_type = InfoType::Sector;
         let market_type = MarketType::Kospi;
-        let otp = get_krx_otp(trading_date, market_type, &client)
+        let trading_date = "20210108";
+        let otp = generate_krx_otp(&client, info_type, market_type, trading_date)
             .await
             .unwrap();
         // Act
@@ -101,10 +121,11 @@ mod test {
     #[tokio::test]
     async fn download_sector_data_from_krx_for_kosdaq() {
         // Arrange
-        let trading_date = "20210108";
         let client = reqwest::Client::new();
+        let info_type = InfoType::Sector;
         let market_type = MarketType::Kosdaq;
-        let otp = get_krx_otp(trading_date, market_type, &client)
+        let trading_date = "20210108";
+        let otp = generate_krx_otp(&client, info_type, market_type, trading_date)
             .await
             .unwrap();
         // Act
