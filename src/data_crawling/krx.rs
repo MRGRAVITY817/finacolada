@@ -142,7 +142,7 @@ mod test {
     }
 
     #[tokio::test]
-    async fn download_sector_data_from_krx_for_kospi() {
+    async fn download_sector_kospi_data() {
         // Arrange
         let client = reqwest::Client::new();
         let otp = generate_krx_otp(
@@ -160,13 +160,31 @@ mod test {
     }
 
     #[tokio::test]
-    async fn download_sector_data_from_krx_for_kosdaq() {
+    async fn download_sector_kosdaq_data() {
         // Arrange
         let client = reqwest::Client::new();
         let otp = generate_krx_otp(
             &client,
             InfoType::Sector,
             MarketType::Kosdaq,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
+        // Act
+        let result = get_sector_data(&otp, &client).await.unwrap();
+        // Assert
+        assert_yaml_snapshot!(result)
+    }
+
+    #[tokio::test]
+    async fn download_individual_kospi_data() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Individual,
+            MarketType::Kospi,
             TEST_TRADING_DATE,
         )
         .await
