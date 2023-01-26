@@ -1,8 +1,4 @@
-use {
-    calamine::{open_workbook, RangeDeserializerBuilder, Reader, Xlsx},
-    reqwest::Client,
-    std::collections::HashMap,
-};
+use {reqwest::Client, std::collections::HashMap};
 
 pub enum InfoType {
     Sector,
@@ -90,33 +86,6 @@ pub async fn download_excel_data(otp: &str, query_client: &Client) -> Result<(),
         .await?;
 
     Ok(std::fs::write("test.xlsx", &result).unwrap())
-}
-
-pub fn parse_xlsx_file(path: &str) -> anyhow::Result<String> {
-    let mut workbook: Xlsx<_> = open_workbook(path)?;
-    let range = workbook
-        .worksheet_range("Sheet1")
-        .ok_or(calamine::Error::Msg("Cannot find 'Sheet1'"))??;
-
-    let mut iter = RangeDeserializerBuilder::new().from_range(&range)?;
-
-    if let Some(result) = iter.next() {
-        let (code, name, market_type, sector, end_value, relative, change_rate, net_value): (
-            String,
-            String,
-            String,
-            String,
-            u32,
-            i32,
-            f32,
-            u64,
-        ) = result?;
-        Ok(format!(
-            "{code} {name} {market_type} {sector} {end_value} {relative} {change_rate} {net_value}"
-        ))
-    } else {
-        Err(calamine::Error::Msg("Cannot parse 'Sheet1'").into())
-    }
 }
 
 #[cfg(test)]
@@ -323,8 +292,6 @@ mod test {
         .unwrap();
         // Act
         let _ = download_excel_data(&otp, &client).await.unwrap();
-        let result = parse_xlsx_file("test.xlsx").unwrap();
         // Assert
-        assert_snapshot!(result, @"095570 AJ네트웍스 KOSPI 서비스업 6050 -10 -0.17 283274884750")
     }
 }
