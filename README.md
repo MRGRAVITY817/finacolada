@@ -1,4 +1,4 @@
-# Finacolada
+# Finacolada 🍍🥥
 
 Minimal finance manager for Hoon and his family.  
 Hope we all have a nice glass of pinacolada in sunny beach 🍹 
