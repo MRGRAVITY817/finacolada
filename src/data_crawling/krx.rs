@@ -1,3 +1,5 @@
+use scraper::Html;
+
 use {reqwest::Client, std::collections::HashMap};
 
 pub enum InfoType {
@@ -11,8 +13,10 @@ pub enum MarketType {
 }
 
 pub const GEN_OTP_URL: &'static str = "http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd";
-pub const SECTOR_DOWNLOAD_URL: &'static str =
+pub const CSV_DOWNLOAD_URL: &'static str =
     "http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd";
+pub const EXCEL_DOWNLOAD_URL: &'static str =
+    "http://data.krx.co.kr/comm/fileDn/download_excel/download.cmd";
 
 pub async fn generate_krx_otp(
     query_client: &Client,
@@ -28,6 +32,7 @@ pub async fn generate_krx_otp(
     let mut params = HashMap::new();
     match info_type {
         InfoType::Sector => {
+            params.insert("locale", "ko_KR");
             params.insert("mktId", market_id);
             params.insert("trdDd", trading_date);
             params.insert("money", "1");
@@ -36,6 +41,7 @@ pub async fn generate_krx_otp(
             params.insert("url", "dbms/MDC/STAT/standard/MDCSTAT03901");
         }
         InfoType::Individual => {
+            params.insert("locale", "ko_KR");
             params.insert("mktId", market_id);
             params.insert("trdDd", trading_date);
             params.insert("searchType", "1");
@@ -59,13 +65,29 @@ pub async fn download_krx_data(otp: &str, query_client: &Client) -> Result<Strin
     params.insert("code", otp);
 
     query_client
-        .post(SECTOR_DOWNLOAD_URL)
+        .post(CSV_DOWNLOAD_URL)
         .form(&params)
         .header("referer", GEN_OTP_URL)
         .send()
         .await?
-        .text_with_charset("EUC-KR")
+        .text_with_charset("euc-kr")
         .await
+}
+
+pub async fn download_excel_data(otp: &str, query_client: &Client) -> Result<(), reqwest::Error> {
+    let mut params = HashMap::new();
+    params.insert("code", otp);
+
+    let result = query_client
+        .post(EXCEL_DOWNLOAD_URL)
+        .form(&params)
+        .header("referer", GEN_OTP_URL)
+        .send()
+        .await?
+        .bytes()
+        .await?;
+
+    Ok(std::fs::write("test.xlsx", &result).unwrap())
 }
 
 #[cfg(test)]
@@ -256,5 +278,23 @@ mod test {
         assert_yaml_snapshot!(third_result);
         assert_eq!(first_result, second_result);
         assert_eq!(first_result, third_result);
+    }
+
+    #[tokio::test]
+    async fn download_excel_data_for_sector() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Sector,
+            MarketType::Kosdaq,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
+        // Act
+        let result = download_excel_data(&otp, &client).await.unwrap();
+        // Assert
+        // assert_yaml_snapshot!(result)
     }
 }
