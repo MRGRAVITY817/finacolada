@@ -103,6 +103,36 @@ mod test {
     }
 
     #[tokio::test]
+    async fn generate_otp_for_kospi_individual_data() {
+        // Arrange
+        let trading_date = "20210108";
+        let client = reqwest::Client::new();
+        let market_type = MarketType::Kospi;
+        let info_type = InfoType::Individual;
+        // Act
+        let result = generate_krx_otp(&client, info_type, market_type, trading_date)
+            .await
+            .unwrap();
+        // Assert
+        assert!(result.len() > 10)
+    }
+
+    #[tokio::test]
+    async fn generate_otp_for_kosdaq_individual_data() {
+        // Arrange
+        let trading_date = "20210108";
+        let client = reqwest::Client::new();
+        let market_type = MarketType::Kosdaq;
+        let info_type = InfoType::Individual;
+        // Act
+        let result = generate_krx_otp(&client, info_type, market_type, trading_date)
+            .await
+            .unwrap();
+        // Assert
+        assert!(result.len() > 10)
+    }
+
+    #[tokio::test]
     async fn download_sector_data_from_krx_for_kospi() {
         // Arrange
         let client = reqwest::Client::new();
