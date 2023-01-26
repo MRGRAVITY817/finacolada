@@ -10,7 +10,32 @@ pub enum MarketType {
     Kosdaq,
 }
 
-pub type KrxSectorRow = (String, String, String, String, u32, i32, f32, u64);
+pub type KrxSectorRow = (
+    String, // issue code
+    String, // issue name
+    String, // market type: Kospi or Kosdaq
+    String, // industry type
+    u32,    // end value
+    i32,    // compared price
+    f32,    // fluctuation rate
+    u64,    // market cap
+);
+
+pub type KrxIndividualRow = (
+    String, // issue code
+    String, // issue name
+    u32,    // end value
+    i32,    // compared price
+    f32,    // fluctuation rate
+    String, // EPS (number but contains `-`)
+    String, // PER (number but contains `-`)
+    String, // Leading EPS (number but contains `-`)
+    String, // Leading PER (number but contains `-`)
+    String, // BPS (number but contains `-`)
+    String, // PBR (number but contains `-`)
+    u32,    // Dividend Per Share
+    f32,    // Dividend Yield Ratio
+);
 
 pub const GEN_OTP_URL: &'static str = "http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd";
 pub const EXCEL_DOWNLOAD_URL: &'static str =
@@ -170,6 +195,19 @@ mod test {
         Ok(format!("{} {} {}", table[0].0, table[0].1, table[0].2))
     }
 
+    fn test_xlsx_individual(input_xlsx_path: &str) -> anyhow::Result<String> {
+        let mut workbook: Xlsx<_> = open_workbook(input_xlsx_path)?;
+        let range = workbook
+            .worksheet_range("Sheet1")
+            .ok_or(calamine::Error::Msg("Cannot find 'Sheet1'"))??;
+
+        let table = RangeDeserializerBuilder::new()
+            .from_range(&range)?
+            .collect::<Result<Vec<KrxIndividualRow>, DeError>>()?;
+
+        Ok(format!("{} {} {}", table[0].0, table[0].3, table[0].5))
+    }
+
     #[tokio::test]
     async fn download_sector_kospi_data() {
         // Arrange
@@ -224,7 +262,7 @@ mod test {
         // Act
         download_krx_data(&client, &otp, output_path).await.unwrap();
         // Assert
-        assert_yaml_snapshot!(test_xlsx_with_first_row(output_path).unwrap())
+        assert_yaml_snapshot!(test_xlsx_individual(output_path).unwrap())
     }
 
     // #[tokio::test]
