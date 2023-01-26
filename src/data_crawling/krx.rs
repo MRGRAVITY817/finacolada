@@ -145,11 +145,14 @@ mod test {
     async fn download_sector_data_from_krx_for_kospi() {
         // Arrange
         let client = reqwest::Client::new();
-        let info_type = InfoType::Sector;
-        let market_type = MarketType::Kospi;
-        let otp = generate_krx_otp(&client, info_type, market_type, TEST_TRADING_DATE)
-            .await
-            .unwrap();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Sector,
+            MarketType::Kospi,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
         // Act
         let result = get_sector_data(&otp, &client).await.unwrap();
         // Assert
@@ -160,11 +163,14 @@ mod test {
     async fn download_sector_data_from_krx_for_kosdaq() {
         // Arrange
         let client = reqwest::Client::new();
-        let info_type = InfoType::Sector;
-        let market_type = MarketType::Kosdaq;
-        let otp = generate_krx_otp(&client, info_type, market_type, TEST_TRADING_DATE)
-            .await
-            .unwrap();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Sector,
+            MarketType::Kosdaq,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
         // Act
         let result = get_sector_data(&otp, &client).await.unwrap();
         // Assert
