@@ -12,6 +12,7 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 - [ ] Get adjusted closing price.
 - [ ] Get daily stock price for individual issue, from _Naver Finance_.
 - [ ] Combine KRX_IND & KRX_SEC using data from _KRX_.
+	- [ ] Get OTP for KOSPI & KOSDAQ.
 	- [ ] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
 	- [ ] KRX_IND PER/PBR/Dividend for individual issue.
   - [ ] Merge KRX_SEC and KRX_IND, remove intersections with none-sense data.
