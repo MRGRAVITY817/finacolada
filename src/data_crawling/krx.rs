@@ -196,6 +196,24 @@ mod test {
     }
 
     #[tokio::test]
+    async fn download_individual_kosdaq() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Individual,
+            MarketType::Kosdaq,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
+        // Act
+        let result = download_krx_data(&otp, &client).await.unwrap();
+        // Assert
+        assert_yaml_snapshot!(result)
+    }
+
+    #[tokio::test]
     async fn download_sector_data_twice_with_same_otp() {
         // Arrange
         let client = reqwest::Client::new();
