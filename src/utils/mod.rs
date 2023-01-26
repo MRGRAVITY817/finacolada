@@ -1,5 +1,5 @@
 use {
-    crate::data_crawling::krx::KrxSectorRow,
+    crate::data_crawling::krx::{KrxIndividualRow, KrxSectorRow},
     calamine::{open_workbook, DeError, RangeDeserializerBuilder, Reader, Xlsx},
     polars::prelude::*,
 };
@@ -17,24 +17,50 @@ pub fn convert_sector_xlsx_to_parquet<'a>(
         .from_range(&range)?
         .collect::<Result<Vec<KrxSectorRow>, DeError>>()?;
 
-    let issue_code_data: Vec<String> = table.iter().map(|row| row.0.clone()).collect();
-    let issue_name_data: Vec<String> = table.iter().map(|row| row.1.clone()).collect();
-    let market_type_data: Vec<String> = table.iter().map(|row| row.2.clone()).collect();
-    let industry_name: Vec<String> = table.iter().map(|row| row.3.clone()).collect();
-    let end_value_data: Vec<u32> = table.iter().map(|row| row.4).collect();
-    let compared_data: Vec<i32> = table.iter().map(|row| row.5).collect();
-    let fluctuation_rate_data: Vec<f32> = table.iter().map(|row| row.6).collect();
-    let market_cap_data: Vec<u64> = table.iter().map(|row| row.7).collect();
+    let mut df = df!(
+        "issue_code" => table.iter().map(|row| row.0.clone()).collect::<Vec<_>>(),
+        "issue_name" => table.iter().map(|row| row.1.clone()).collect::<Vec<_>>(),
+        "market_type" => table.iter().map(|row| row.2.clone()).collect::<Vec<_>>(),
+        "industry" => table.iter().map(|row| row.3.clone()).collect::<Vec<_>>(),
+        "end_value" => table.iter().map(|row| row.4).collect::<Vec<_>>(),
+        "compared" => table.iter().map(|row| row.5).collect::<Vec<_>>(),
+        "fluctuation_rate" => table.iter().map(|row| row.6).collect::<Vec<_>>(),
+        "market_cap" => table.iter().map(|row| row.7).collect::<Vec<_>>()
+    )?;
+
+    let mut file = std::fs::File::create(output_parquet_path)?;
+    ParquetWriter::new(&mut file).finish(&mut df)?;
+
+    Ok(())
+}
+
+pub fn convert_individual_xlsx_to_parquet<'a>(
+    input_xlsx_path: &'a str,
+    output_parquet_path: &'a str,
+) -> anyhow::Result<()> {
+    let mut workbook: Xlsx<_> = open_workbook(input_xlsx_path)?;
+    let range = workbook
+        .worksheet_range("Sheet1")
+        .ok_or(calamine::Error::Msg("Cannot find 'Sheet1'"))??;
+
+    let table = RangeDeserializerBuilder::new()
+        .from_range(&range)?
+        .collect::<Result<Vec<KrxIndividualRow>, DeError>>()?;
 
     let mut df = df!(
-        "issue_code" => issue_code_data,
-        "issue_name" => issue_name_data,
-        "market_type" => market_type_data,
-        "industry" => industry_name,
-        "end_value" => end_value_data,
-        "compared" => compared_data,
-        "fluctuation_rate" => fluctuation_rate_data,
-        "market_cap" => market_cap_data
+        "issue_code" => table.iter().map(|row| row.0.clone()).collect::<Vec<_>>(),
+        "issue_name" => table.iter().map(|row| row.1.clone()).collect::<Vec<_>>(),
+        "end_value" => table.iter().map(|row| row.2).collect::<Vec<_>>(),
+        "compared" => table.iter().map(|row| row.3).collect::<Vec<_>>(),
+        "fluctuation_rate" => table.iter().map(|row| row.4).collect::<Vec<_>>(),
+        "eps" => table.iter().map(|row| row.5.clone()).collect::<Vec<_>>(),
+        "per" => table.iter().map(|row| row.6.clone()).collect::<Vec<_>>(),
+        "leading_eps" => table.iter().map(|row| row.7.clone()).collect::<Vec<_>>(),
+        "leading_per" => table.iter().map(|row| row.8.clone()).collect::<Vec<_>>(),
+        "bps" => table.iter().map(|row| row.9.clone()).collect::<Vec<_>>(),
+        "pbr" => table.iter().map(|row| row.10.clone()).collect::<Vec<_>>(),
+        "dps" => table.iter().map(|row| row.11).collect::<Vec<_>>(),
+        "dyr" => table.iter().map(|row| row.12).collect::<Vec<_>>()
     )?;
 
     let mut file = std::fs::File::create(output_parquet_path)?;
@@ -68,8 +94,8 @@ mod test {
     #[test]
     fn can_read_converted_individual_parquet_as_lazyframe() {
         // Arrange
-        let input_path = "example/krx_individual_kospi.xlsx";
-        let output_path = "example/krx_individual_kospi.parquet";
+        let input_path = "examples/krx_individual_kospi.xlsx";
+        let output_path = "examples/krx_individual_kospi.parquet";
         // Act
         convert_individual_xlsx_to_parquet(input_path, output_path).unwrap();
         // Assert
@@ -77,7 +103,7 @@ mod test {
         assert!(lf.is_ok());
         assert_snapshot!(lf
             .unwrap()
-            .filter(col("end_value").gt(lit(10000)))
+            .filter(col("end_value").gt(lit(500)))
             .collect()
             .unwrap()
             .to_string())
