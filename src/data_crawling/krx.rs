@@ -54,7 +54,7 @@ pub async fn generate_krx_otp(
         .await
 }
 
-pub async fn get_sector_data(otp: &str, query_client: &Client) -> Result<String, reqwest::Error> {
+pub async fn download_krx_data(otp: &str, query_client: &Client) -> Result<String, reqwest::Error> {
     let mut params = HashMap::new();
     params.insert("code", otp);
 
@@ -64,7 +64,7 @@ pub async fn get_sector_data(otp: &str, query_client: &Client) -> Result<String,
         .header("referer", GEN_OTP_URL)
         .send()
         .await?
-        .text()
+        .text_with_charset("EUC-KR")
         .await
 }
 
@@ -154,7 +154,7 @@ mod test {
         .await
         .unwrap();
         // Act
-        let result = get_sector_data(&otp, &client).await.unwrap();
+        let result = download_krx_data(&otp, &client).await.unwrap();
         // Assert
         assert_yaml_snapshot!(result)
     }
@@ -172,7 +172,7 @@ mod test {
         .await
         .unwrap();
         // Act
-        let result = get_sector_data(&otp, &client).await.unwrap();
+        let result = download_krx_data(&otp, &client).await.unwrap();
         // Assert
         assert_yaml_snapshot!(result)
     }
@@ -190,7 +190,7 @@ mod test {
         .await
         .unwrap();
         // Act
-        let result = get_sector_data(&otp, &client).await.unwrap();
+        let result = download_krx_data(&otp, &client).await.unwrap();
         // Assert
         assert_yaml_snapshot!(result)
     }
@@ -208,8 +208,8 @@ mod test {
         .await
         .unwrap();
         // Act
-        let first_result = get_sector_data(&otp, &client).await.unwrap();
-        let second_result = get_sector_data(&otp, &client).await.unwrap();
+        let first_result = download_krx_data(&otp, &client).await.unwrap();
+        let second_result = download_krx_data(&otp, &client).await.unwrap();
         // Assert
         assert_yaml_snapshot!(first_result);
         assert_yaml_snapshot!(second_result);
