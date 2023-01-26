@@ -55,13 +55,14 @@ mod test {
     use {super::*, insta::*, reqwest};
 
     #[tokio::test]
-    async fn get_generated_otp_from_krx_for_kospi() {
+    async fn generate_otp_for_kospi_sector_data() {
         // Arrange
         let trading_date = "20210108";
         let client = reqwest::Client::new();
         let market_type = MarketType::Kospi;
+        let info_type = InfoType::Sector;
         // Act
-        let result = get_krx_otp(trading_date, market_type, &client)
+        let result = get_krx_otp(&client, info_type, market_type, trading_date)
             .await
             .unwrap();
         // Assert
@@ -69,13 +70,13 @@ mod test {
     }
 
     #[tokio::test]
-    async fn get_generated_otp_from_krx_for_kosdaq() {
+    async fn generate_otp_for_kosdaq_sector_data() {
         // Arrange
         let trading_date = "20210108";
         let client = reqwest::Client::new();
         let market_type = MarketType::Kosdaq;
         // Act
-        let result = get_krx_otp(trading_date, market_type, &client)
+        let result = get_krx_otp(&client, info_type, market_type, trading_date)
             .await
             .unwrap();
         // Assert
