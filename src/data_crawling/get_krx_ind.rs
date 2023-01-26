@@ -46,7 +46,7 @@ pub async fn get_sector_data(otp: &str, query_client: &Client) -> Result<String,
         .header("referer", GEN_OTP_URL)
         .send()
         .await?
-        .text_with_charset("EUC_KR")
+        .text()
         .await
 }
 

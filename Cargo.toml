@@ -6,10 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+regex = "1"
 reqwest = {version = "0.11", features = ["json"]}
+scraper = "0.14"
 tokio = {version = "1", features = ["macros", "rt-multi-thread"]}
 
 [dev-dependencies]
-chrono = "0.4.23"
-insta = { version = "1.26.0", features = ["yaml"] }
+chrono = "0.4"
+insta = { version = "1", features = ["yaml"] }
 
