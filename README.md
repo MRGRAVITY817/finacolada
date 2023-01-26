@@ -26,3 +26,11 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 ### Add quantitative strategy
 
 - [ ] _add todo item..._
+
+## Testing
+
+```bash
+$ cargo test
+# If snapshot isn't fully updated, 
+$ cargo insta test --review
+```
