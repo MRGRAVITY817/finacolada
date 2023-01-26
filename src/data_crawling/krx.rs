@@ -182,7 +182,7 @@ mod test {
         assert!(result.len() > 10)
     }
 
-    fn test_xlsx_with_first_row(input_xlsx_path: &str) -> anyhow::Result<String> {
+    fn test_xlsx_sector(input_xlsx_path: &str) -> anyhow::Result<String> {
         let mut workbook: Xlsx<_> = open_workbook(input_xlsx_path)?;
         let range = workbook
             .worksheet_range("Sheet1")
@@ -192,7 +192,10 @@ mod test {
             .from_range(&range)?
             .collect::<Result<Vec<KrxSectorRow>, DeError>>()?;
 
-        Ok(format!("{} {} {}", table[0].0, table[0].1, table[0].2))
+        Ok(format!(
+            "{} {} {} {} {} {}",
+            table[0].0, table[0].1, table[0].2, table[0].3, table[0].4, table[0].5
+        ))
     }
 
     fn test_xlsx_individual(input_xlsx_path: &str) -> anyhow::Result<String> {
@@ -205,7 +208,19 @@ mod test {
             .from_range(&range)?
             .collect::<Result<Vec<KrxIndividualRow>, DeError>>()?;
 
-        Ok(format!("{} {} {}", table[0].0, table[0].3, table[0].5))
+        Ok(format!(
+            "{} {} {} {} {} {} {} {} {} {}",
+            table[0].0,
+            table[0].1,
+            table[0].2,
+            table[0].3,
+            table[0].4,
+            table[0].5,
+            table[0].6,
+            table[0].7,
+            table[0].8,
+            table[0].9
+        ))
     }
 
     #[tokio::test]
@@ -224,7 +239,10 @@ mod test {
         // Act
         download_krx_data(&client, &otp, output_path).await.unwrap();
         // Assert
-        assert_yaml_snapshot!(test_xlsx_with_first_row(output_path).unwrap())
+        assert_snapshot!(
+            test_xlsx_sector(output_path).unwrap(),
+            @"095570 AJ네트웍스 KOSPI 서비스업 6050 -10"
+        );
     }
 
     #[tokio::test]
@@ -243,7 +261,10 @@ mod test {
         // Act
         download_krx_data(&client, &otp, output_path).await.unwrap();
         // Assert
-        assert_yaml_snapshot!(test_xlsx_with_first_row(output_path).unwrap())
+        assert_snapshot!(
+            test_xlsx_sector(output_path).unwrap(),
+            @"060310 3S KOSDAQ 기계·장비 2235 15"
+        );
     }
 
     #[tokio::test]
@@ -262,26 +283,33 @@ mod test {
         // Act
         download_krx_data(&client, &otp, output_path).await.unwrap();
         // Assert
-        assert_yaml_snapshot!(test_xlsx_individual(output_path).unwrap())
+        assert_snapshot!(
+            test_xlsx_individual(output_path).unwrap(),
+            @"095570 AJ네트웍스  6050 -10 -0.17 1707 3.54 977 6.19 8075"
+        );
     }
 
-    // #[tokio::test]
-    // async fn download_individual_kosdaq() {
-    //     // Arrange
-    //     let client = reqwest::Client::new();
-    //     let otp = generate_krx_otp(
-    //         &client,
-    //         InfoType::Individual,
-    //         MarketType::Kosdaq,
-    //         TEST_TRADING_DATE,
-    //     )
-    //     .await
-    //     .unwrap();
-    //     // Act
-    //     let result = download_krx_data(&otp, &client).await.unwrap();
-    //     // Assert
-    //     assert_yaml_snapshot!(result)
-    // }
+    #[tokio::test]
+    async fn download_individual_kosdaq_data() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let otp = generate_krx_otp(
+            &client,
+            InfoType::Individual,
+            MarketType::Kosdaq,
+            TEST_TRADING_DATE,
+        )
+        .await
+        .unwrap();
+        let output_path = "examples/krx_individual_kosdaq.xlsx";
+        // Act
+        download_krx_data(&client, &otp, output_path).await.unwrap();
+        // Assert
+        assert_snapshot!(
+            test_xlsx_individual(output_path).unwrap(),
+            @"060310 3S  2235 15 0.68 33 67.73 - - 829"
+        );
+    }
 
     // #[tokio::test]
     // async fn download_sector_data_twice_with_same_otp() {
