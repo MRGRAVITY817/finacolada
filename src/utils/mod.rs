@@ -48,12 +48,30 @@ mod test {
     use {super::*, insta::assert_snapshot};
 
     #[test]
-    fn can_read_converted_parquet_as_lazyframe() {
+    fn can_read_converted_sector_parquet_as_lazyframe() {
         // Arrange
-        let input_path = "test.xlsx";
-        let output_path = "converted.parquet";
+        let input_path = "examples/krx_sector_kospi.xlsx";
+        let output_path = "examples/krx_sector_kospi.parquet";
         // Act
         convert_sector_xlsx_to_parquet(input_path, output_path).unwrap();
+        // Assert
+        let lf = LazyFrame::scan_parquet(output_path, Default::default());
+        assert!(lf.is_ok());
+        assert_snapshot!(lf
+            .unwrap()
+            .filter(col("end_value").gt(lit(10000)))
+            .collect()
+            .unwrap()
+            .to_string())
+    }
+
+    #[test]
+    fn can_read_converted_individual_parquet_as_lazyframe() {
+        // Arrange
+        let input_path = "example/krx_individual_kospi.xlsx";
+        let output_path = "example/krx_individual_kospi.parquet";
+        // Act
+        convert_individual_xlsx_to_parquet(input_path, output_path).unwrap();
         // Assert
         let lf = LazyFrame::scan_parquet(output_path, Default::default());
         assert!(lf.is_ok());
