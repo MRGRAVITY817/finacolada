@@ -1,17 +1,19 @@
-use reqwest::Client;
-use std::collections::HashMap;
+use {reqwest::Client, std::collections::HashMap};
 
 pub enum MarketType {
     Kospi,
     Kosdaq,
 }
 
+pub const GEN_OTP_URL: &'static str = "http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd";
+pub const SECTOR_DOWNLOAD_URL: &'static str =
+    "http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd";
+
 pub async fn get_krx_otp(
     trading_date: &str,
     market_type: MarketType,
     query_client: &Client,
 ) -> Result<String, reqwest::Error> {
-    let gen_otp_url = "http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd";
     let market_id = match market_type {
         MarketType::Kospi => "STK",
         MarketType::Kosdaq => "KSQ",
@@ -26,11 +28,25 @@ pub async fn get_krx_otp(
     params.insert("url", "dbms/MDC/STAT/standard/MDCSTAT03901");
 
     query_client
-        .post(gen_otp_url)
+        .post(GEN_OTP_URL)
         .form(&params)
         .send()
         .await?
         .text()
+        .await
+}
+
+pub async fn get_sector_data(otp: &str, query_client: &Client) -> Result<String, reqwest::Error> {
+    let mut params = HashMap::new();
+    params.insert("code", otp);
+
+    query_client
+        .post(SECTOR_DOWNLOAD_URL)
+        .form(&params)
+        .header("referer", GEN_OTP_URL)
+        .send()
+        .await?
+        .text_with_charset("EUC_KR")
         .await
 }
 
@@ -76,7 +92,7 @@ mod test {
             .await
             .unwrap();
         // Act
-        let result = get_sector_data(otp).await.unwrap();
+        let result = get_sector_data(&otp, &client).await.unwrap();
         // Assert
         assert_yaml_snapshot!(result)
     }
