@@ -15,7 +15,7 @@ pub type KrxSectorRow = (
     String, // issue name
     String, // market type: Kospi or Kosdaq
     String, // industry type
-    u32,    // end value
+    u32,    // closing price
     i32,    // compared price
     f32,    // fluctuation rate
     u64,    // market cap
@@ -24,7 +24,7 @@ pub type KrxSectorRow = (
 pub type KrxIndividualRow = (
     String, // issue code
     String, // issue name
-    u32,    // end value
+    u32,    // closing price
     i32,    // compared price
     f32,    // fluctuation rate
     String, // EPS (number but contains `-`)

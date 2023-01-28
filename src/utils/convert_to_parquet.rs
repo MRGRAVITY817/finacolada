@@ -22,7 +22,7 @@ pub fn convert_sector_xlsx_to_parquet<'a>(
         "issue_name" => table.iter().map(|row| row.1.clone()).collect::<Vec<_>>(),
         "market_type" => table.iter().map(|row| row.2.clone()).collect::<Vec<_>>(),
         "industry" => table.iter().map(|row| row.3.clone()).collect::<Vec<_>>(),
-        "end_value" => table.iter().map(|row| row.4).collect::<Vec<_>>(),
+        "closing_price" => table.iter().map(|row| row.4).collect::<Vec<_>>(),
         "compared" => table.iter().map(|row| row.5).collect::<Vec<_>>(),
         "fluctuation_rate" => table.iter().map(|row| row.6).collect::<Vec<_>>(),
         "market_cap" => table.iter().map(|row| row.7).collect::<Vec<_>>()
@@ -50,7 +50,7 @@ pub fn convert_individual_xlsx_to_parquet<'a>(
     let mut df = df!(
         "issue_code" => table.iter().map(|row| row.0.clone()).collect::<Vec<_>>(),
         "issue_name" => table.iter().map(|row| row.1.clone()).collect::<Vec<_>>(),
-        "end_value" => table.iter().map(|row| row.2).collect::<Vec<_>>(),
+        "closing_price" => table.iter().map(|row| row.2).collect::<Vec<_>>(),
         "compared" => table.iter().map(|row| row.3).collect::<Vec<_>>(),
         "fluctuation_rate" => table.iter().map(|row| row.4).collect::<Vec<_>>(),
         "eps" => table.iter().map(|row| row.5.clone()).collect::<Vec<_>>(),
@@ -85,7 +85,7 @@ mod test {
         assert!(lf.is_ok());
         assert_snapshot!(lf
             .unwrap()
-            .filter(col("end_value").gt(lit(10000)))
+            .filter(col("closing_price").gt(lit(10000)))
             .collect()
             .unwrap()
             .to_string())
@@ -103,7 +103,7 @@ mod test {
         assert!(lf.is_ok());
         assert_snapshot!(lf
             .unwrap()
-            .filter(col("end_value").gt(lit(500)))
+            .filter(col("closing_price").gt(lit(500)))
             .collect()
             .unwrap()
             .to_string())

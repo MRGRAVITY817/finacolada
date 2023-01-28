@@ -59,7 +59,7 @@ mod test {
             HashSet::from([
                 "issue_name".to_string(),
                 "compared".to_string(),
-                "end_value".to_string(),
+                "closing_price".to_string(),
                 "fluctuation_rate".to_string(),
                 "issue_code".to_string(),
             ])
@@ -110,12 +110,12 @@ mod test {
                 "issue_name",
                 "market_type",
                 "industry",
-                "end_value",
+                "closing_price",
                 "compared",
                 "fluctuation_rate",
                 "market_cap",
                 "issue_name_right",
-                "end_value_right",
+                "closing_price_right",
                 "compared_right",
                 "fluctuation_rate_right",
                 "eps",
