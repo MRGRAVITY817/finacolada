@@ -1,6 +1,6 @@
-use serde_json::Value;
-
-use {super::biz_day::get_latest_biz_day, serde::Deserialize};
+use {
+    super::biz_day::get_latest_biz_day, polars::prelude::*, serde::Deserialize, serde_json::Value,
+};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
@@ -58,38 +58,39 @@ pub async fn get_daily_wics_list(
     Ok(row_list)
 }
 
-// pub async fn get_latest_wisc_data(query_client: &reqwest::Client) -> anyhow::Result<String> {
-//     // 1. Get WICS data for every sector codes
-//     let date = get_latest_biz_day(query_client).await?;
-//     // 2. Deserialize JSON string as struct
-//     let meta: Value = serde_json::from_str(&)
-//     // 3. Get the "list" property
-//     // 4. Create a DataFrame that contains each sector items.
-//     let df = df![
-//       "IDX_CD" => idx_cd,
-//       "IDX_NM_KOR" => idx_nm_kor,
-//       "ALL_MKT_VAL" => all_mkt_val,
-//       "CMP_CD" => cmp_cd,
-//       "CMP_KOR" => cmp_kor,
-//       "MKT_VAL" => mkt_val,
-//       "WGT" => wgt,
-//       "S_WGT" => s_wgt,
-//       "CAL_WGT" => cal_wgt,
-//       "SEC_CD" => sec_cd,
-//       "SEC_NM_KOR" => sec_nm_kor,
-//       "SEQ" => seq,
-//       "TOP60" => top60,
-//       "APT_SHR_CNT" => apt_shr_cnt
-//     ]?;
-//     // 5. Save DataFrame as parquet file
-//     let file_name = "assets/wics/latest_wics_data.parquet";
-//     // 6. Return the parquet file name
-//     Ok(file_name.to_string())
-// }
+pub async fn get_latest_wisc_data(query_client: &reqwest::Client) -> anyhow::Result<String> {
+    // 1. Get WICS data for every sector codes
+    let date = get_latest_biz_day(query_client).await?;
+    // 2. Deserialize all WICS data
+    let wics_list = get_daily_wics_list(query_client, &date).await?;
+    // 3. Create a DataFrame that contains each sector items.
+    let mut df = df!(
+      "idx_cd" => wics_list.iter().map(|wics| wics.idx_cd.clone()).collect::<Vec<_>>(),
+      "idx_nm_kor" => wics_list.iter().map(|wics| wics.idx_nm_kor.clone()).collect::<Vec<_>>(),
+      "all_mkt_val" => wics_list.iter().map(|wics| wics.all_mkt_val).collect::<Vec<_>>(),
+      "cmp_cd" => wics_list.iter().map(|wics| wics.cmp_cd.clone()).collect::<Vec<_>>(),
+      "cmp_kor" => wics_list.iter().map(|wics| wics.cmp_kor.clone()).collect::<Vec<_>>(),
+      "mkt_val" => wics_list.iter().map(|wics| wics.mkt_val).collect::<Vec<_>>(),
+      "wgt" => wics_list.iter().map(|wics| wics.wgt).collect::<Vec<_>>(),
+      "s_wgt" => wics_list.iter().map(|wics| wics.s_wgt).collect::<Vec<_>>(),
+      "cal_wgt" => wics_list.iter().map(|wics| wics.cal_wgt).collect::<Vec<_>>(),
+      "sec_cd" => wics_list.iter().map(|wics| wics.sec_cd.clone()).collect::<Vec<_>>(),
+      "sec_nm_kor" => wics_list.iter().map(|wics| wics.sec_nm_kor.clone()).collect::<Vec<_>>(),
+      "seq" => wics_list.iter().map(|wics| wics.seq).collect::<Vec<_>>(),
+      "top60" => wics_list.iter().map(|wics| wics.top60).collect::<Vec<_>>(),
+      "apt_shr_cnt" => wics_list.iter().map(|wics| wics.apt_shr_cnt).collect::<Vec<_>>()
+    )?;
+    // 5. Save DataFrame as parquet file
+    let file_name = "assets/wics/latest_wics_data.parquet";
+    let mut file = std::fs::File::create(file_name)?;
+    ParquetWriter::new(&mut file).finish(&mut df)?;
+    // 6. Return the parquet file name
+    Ok(file_name.to_string())
+}
 
 #[cfg(test)]
 mod test {
-    use {super::*, insta::assert_yaml_snapshot};
+    use {super::*, insta::*};
 
     #[tokio::test]
     async fn should_have_json_text() {
@@ -126,5 +127,47 @@ mod test {
         let result = get_daily_wics_list(&client, date).await.unwrap();
         // Assert
         assert_yaml_snapshot!(format!("{:?}", result.iter().next()))
+    }
+
+    #[tokio::test]
+    async fn can_read_wics_parquet_as_lazyframe() {
+        // Arrange
+        let client = reqwest::Client::new();
+        // Act
+        let result = get_latest_wisc_data(&client).await.unwrap();
+        // Assert
+        let lf = LazyFrame::scan_parquet(&result, Default::default());
+        assert!(lf.is_ok());
+        assert_snapshot!(lf
+            .unwrap()
+            .filter(col("seq").lt(lit(2)))
+            .collect()
+            .unwrap()
+            .to_string(), @r###"
+        shape: (10, 14)
+        ┌────────┬─────────────────────────┬─────────────┬────────┬─────┬────────────────────┬─────┬───────┬─────────────┐
+        │ idx_cd ┆ idx_nm_kor              ┆ all_mkt_val ┆ cmp_cd ┆ ... ┆ sec_nm_kor         ┆ seq ┆ top60 ┆ apt_shr_cnt │
+        │ ---    ┆ ---                     ┆ ---         ┆ ---    ┆     ┆ ---                ┆ --- ┆ ---   ┆ ---         │
+        │ str    ┆ str                     ┆ u64         ┆ str    ┆     ┆ str                ┆ i32 ┆ u32   ┆ u64         │
+        ╞════════╪═════════════════════════╪═════════════╪════════╪═════╪════════════════════╪═════╪═══════╪═════════════╡
+        │ G25    ┆ WICS 경기관련소비재     ┆ 124418042   ┆ 005380 ┆ ... ┆ 경기관련소비재     ┆ 1   ┆ 9     ┆ 141021003   │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G35    ┆ WICS 건강관리           ┆ 106229008   ┆ 068270 ┆ ... ┆ 건강관리           ┆ 1   ┆ 24    ┆ 111200858   │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G50    ┆ WICS 커뮤니케이션서비스 ┆ 106819099   ┆ 035420 ┆ ... ┆ 커뮤니케이션서비스 ┆ 1   ┆ 6     ┆ 127958286   │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G40    ┆ WICS 금융               ┆ 123850288   ┆ 105560 ┆ ... ┆ 금융               ┆ 1   ┆ 8     ┆ 314850742   │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ ...    ┆ ...                     ┆ ...         ┆ ...    ┆ ... ┆ ...                ┆ ... ┆ ...   ┆ ...         │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G55    ┆ WICS 유틸리티           ┆ 11556007    ┆ 015760 ┆ ... ┆ 유틸리티           ┆ 1   ┆ 2     ┆ 288883835   │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G30    ┆ WICS 필수소비재         ┆ 28799112    ┆ 033780 ┆ ... ┆ 필수소비재         ┆ 1   ┆ 5     ┆ 108461073   │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G15    ┆ WICS 소재               ┆ 108752814   ┆ 051910 ┆ ... ┆ 소재               ┆ 1   ┆ 6     ┆ 45179100    │
+        ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ G45    ┆ WICS IT                 ┆ 507171283   ┆ 005930 ┆ ... ┆ IT                 ┆ 1   ┆ 2     ┆ 4477336913  │
+        └────────┴─────────────────────────┴─────────────┴────────┴─────┴────────────────────┴─────┴───────┴─────────────┘
+        "###)
     }
 }
