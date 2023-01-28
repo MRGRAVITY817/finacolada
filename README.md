@@ -16,7 +16,6 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
   - [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
   - [x] KRX_IND PER/PBR/Dividend for individual issue.
   - [x] Merge KRX_SEC and KRX_IND, remove intersections with none-sense data.
-  - [ ] Order the merged list by net value.
   - [ ] Ignore preferred stock.
 
 ### Organizing & Visualizing data
