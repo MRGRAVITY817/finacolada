@@ -29,8 +29,6 @@ pub async fn get_daily_wics_list(query_client: &reqwest::Client, date: &str) -> 
 
 #[cfg(test)]
 mod test {
-    use crate::data_crawling::biz_day::get_latest_biz_day;
-
     use {super::*, insta::assert_snapshot};
 
     #[tokio::test]
