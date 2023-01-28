@@ -310,49 +310,4 @@ mod test {
             @"060310 3S  2235 15 0.68 33 67.73 - - 829"
         );
     }
-
-    // #[tokio::test]
-    // async fn download_sector_data_twice_with_same_otp() {
-    //     // Arrange
-    //     let client = reqwest::Client::new();
-    //     let otp = generate_krx_otp(
-    //         &client,
-    //         InfoType::Sector,
-    //         MarketType::Kospi,
-    //         TEST_TRADING_DATE,
-    //     )
-    //     .await
-    //     .unwrap();
-    //     // Act
-    //     let first_result = download_krx_data(&otp, &client).await.unwrap();
-    //     let second_result = download_krx_data(&otp, &client).await.unwrap();
-    //     // Assert
-    //     assert_yaml_snapshot!(first_result);
-    //     assert_yaml_snapshot!(second_result);
-    //     assert_eq!(first_result, second_result)
-    // }
-
-    // #[tokio::test]
-    // async fn download_individual_data_thrice_with_same_otp() {
-    //     // Arrange
-    //     let client = reqwest::Client::new();
-    //     let otp = generate_krx_otp(
-    //         &client,
-    //         InfoType::Sector,
-    //         MarketType::Kospi,
-    //         TEST_TRADING_DATE,
-    //     )
-    //     .await
-    //     .unwrap();
-    //     // Act
-    //     let first_result = download_krx_data(&otp, &client).await.unwrap();
-    //     let second_result = download_krx_data(&otp, &client).await.unwrap();
-    //     let third_result = download_krx_data(&otp, &client).await.unwrap();
-    //     // Assert
-    //     assert_yaml_snapshot!(first_result);
-    //     assert_yaml_snapshot!(second_result);
-    //     assert_yaml_snapshot!(third_result);
-    //     assert_eq!(first_result, second_result);
-    //     assert_eq!(first_result, third_result);
-    // }
 }

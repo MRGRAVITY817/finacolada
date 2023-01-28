@@ -42,9 +42,10 @@ pub fn get_common_columns<'a>(
 
 #[cfg(test)]
 mod test {
-    use insta::assert_snapshot;
-
-    use {super::*, std::collections::HashSet};
+    use {
+        insta::assert_snapshot,
+        {super::*, std::collections::HashSet},
+    };
 
     #[test]
     fn find_out_common_columns() {
