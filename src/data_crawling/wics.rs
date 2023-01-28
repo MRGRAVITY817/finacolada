@@ -1,4 +1,4 @@
-const SECTOR_CODE_LIST: [&str; 10] = [
+pub const SECTOR_CODE_LIST: [&str; 10] = [
     "G25", "G35", "G50", "G40", "G10", "G20", "G55", "G30", "G15", "G45",
 ];
 
@@ -20,6 +20,8 @@ pub async fn get_wics(
 
 #[cfg(test)]
 mod test {
+    use crate::data_crawling::biz_day::get_latest_biz_day;
+
     use {super::*, insta::assert_snapshot};
 
     #[tokio::test]
@@ -46,5 +48,23 @@ mod test {
         let now_result = get_wics(&client, now_date, sector_code).await.unwrap();
         // Assert
         assert_ne!(early_result, now_result)
+    }
+
+    #[tokio::test]
+    async fn created_files_should_contain_biz_day_in_filename() -> anyhow::Result<()> {
+        // Arrange
+        let client = reqwest::Client::new();
+        let date = get_latest_biz_day(&client).await?;
+        // Act
+        get_daily_wics_list(&client, &date).await?;
+        // Assert
+        let dir = std::fs::read_dir(format!("assets/wics/${date}"));
+        assert!(dir.is_ok());
+        for file_result in dir? {
+            let file_name = file_result?.file_name().to_str();
+            assert!(file_name.is_some());
+            assert!(file_name.unwrap().contains(&date));
+        }
+        Ok(())
     }
 }

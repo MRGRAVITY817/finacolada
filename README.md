@@ -1,7 +1,7 @@
 # Finacolada 🍍🥥
 
 Minimal finance manager for Hoon and his family.  
-Hope we all have a nice glass of pinacolada in sunny beach 🍹 
+Hope we all have a nice glass of pinacolada in sunny beach 🍹
 
 ## TODO
 
@@ -11,13 +11,13 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 - [x] Get WICS sector info from _WiseIndex_.
 - [ ] Get adjusted closing price.
 - [ ] Get daily stock price for individual issue, from _Naver Finance_.
-- [ ] Combine KRX_IND & KRX_SEC using data from _KRX_.
-	- [x] Get OTP for KOSPI & KOSDAQ.
-	- [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
-	- [x] KRX_IND PER/PBR/Dividend for individual issue.
+- [ ] Combine KRX*IND & KRX_SEC using data from \_KRX*.
+  - [x] Get OTP for KOSPI & KOSDAQ.
+  - [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
+  - [x] KRX_IND PER/PBR/Dividend for individual issue.
   - [x] Merge KRX_SEC and KRX_IND, remove intersections with none-sense data.
-	- [ ] Order the merged list by net value.
-	- [ ] Ignore preferred stock.
+  - [ ] Order the merged list by net value.
+  - [ ] Ignore preferred stock.
 
 ### Organizing & Visualizing data
 
@@ -31,6 +31,6 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 
 ```bash
 $ cargo test
-# If snapshot isn't fully updated, 
+# If snapshot isn't fully updated,
 $ cargo insta test --review
 ```
