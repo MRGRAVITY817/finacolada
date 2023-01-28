@@ -636,12 +636,15 @@ dependencies = [
  "anyhow",
  "calamine",
  "chrono",
+ "futures",
  "insta",
  "polars",
+ "rayon",
  "regex",
  "reqwest",
  "scraper",
  "serde",
+ "serde_json",
  "tokio",
 ]
 
