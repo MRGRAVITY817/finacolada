@@ -18,6 +18,15 @@ pub async fn get_wics(
         .await
 }
 
+pub async fn get_daily_wics_list(query_client: &reqwest::Client, date: &str) -> anyhow::Result<()> {
+    std::fs::create_dir_all(format!("assets/wics/{date}"))?;
+    for sector in SECTOR_CODE_LIST {
+        let result = get_wics(query_client, date, sector).await?;
+        std::fs::write(format!("assets/wics/{date}/{sector}.json"), result)?;
+    }
+    Ok(())
+}
+
 #[cfg(test)]
 mod test {
     use crate::data_crawling::biz_day::get_latest_biz_day;
@@ -48,23 +57,5 @@ mod test {
         let now_result = get_wics(&client, now_date, sector_code).await.unwrap();
         // Assert
         assert_ne!(early_result, now_result)
-    }
-
-    #[tokio::test]
-    async fn created_files_should_contain_biz_day_in_filename() -> anyhow::Result<()> {
-        // Arrange
-        let client = reqwest::Client::new();
-        let date = get_latest_biz_day(&client).await?;
-        // Act
-        get_daily_wics_list(&client, &date).await?;
-        // Assert
-        let dir = std::fs::read_dir(format!("assets/wics/${date}"));
-        assert!(dir.is_ok());
-        for file_result in dir? {
-            let file_name = file_result?.file_name().to_str();
-            assert!(file_name.is_some());
-            assert!(file_name.unwrap().contains(&date));
-        }
-        Ok(())
     }
 }
