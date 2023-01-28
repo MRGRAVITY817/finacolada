@@ -1,6 +1,4 @@
-use std::collections::HashSet;
-
-use polars::prelude::*;
+use {polars::prelude::*, std::collections::HashSet};
 
 pub fn get_common_columns<'a>(
     left_input: &'a str,
@@ -52,5 +50,16 @@ mod test {
                 "issue_code".to_string(),
             ])
         );
+    }
+
+    #[test]
+    fn merged_table_should_not_contain_esoteric_issues() {
+        // Arrange
+        let sector_path = "examples/krx_sector_kospi.parquet";
+        let indi_path = "examples/krx_individual_kospi.parquet";
+        // Act
+        let result = merge_sector_individual(sector_path, indi_path).unwrap();
+        // Assert
+        assert!(!result.select([col("issues_name")]).contains("SK리츠"))
     }
 }
