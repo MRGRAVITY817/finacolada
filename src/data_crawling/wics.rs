@@ -1,3 +1,7 @@
+const SECTOR_CODE_LIST: [&str; 10] = [
+    "G25", "G35", "G50", "G40", "G10", "G20", "G55", "G30", "G15", "G45",
+];
+
 pub async fn get_wics(
     query_client: &reqwest::Client,
     date: &str,
@@ -28,5 +32,19 @@ mod test {
         let result = get_wics(&client, date, sector_code).await.unwrap();
         // Assert
         assert_snapshot!(result)
+    }
+
+    #[tokio::test]
+    async fn different_date_should_have_different_data() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let early_date = "20230126";
+        let now_date = "20230127";
+        let sector_code = "G10";
+        // Act
+        let early_result = get_wics(&client, early_date, sector_code).await.unwrap();
+        let now_result = get_wics(&client, now_date, sector_code).await.unwrap();
+        // Assert
+        assert_ne!(early_result, now_result)
     }
 }
