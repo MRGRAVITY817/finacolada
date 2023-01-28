@@ -88,4 +88,45 @@ mod test {
         └────────────┘
         "###)
     }
+
+    #[test]
+    fn merged_table_should_contain_all_rows() {
+        // Arrange
+        let sector_path = "examples/krx_sector_kospi.parquet";
+        let indi_path = "examples/krx_individual_kospi.parquet";
+        // Act
+        let result = merge_sector_individual(sector_path, indi_path).unwrap();
+        // Assert
+        assert_eq!(
+            result
+                .schema()
+                .unwrap()
+                .clone()
+                .iter()
+                .map(|(k, _)| k.to_owned())
+                .collect::<Vec<String>>(),
+            vec![
+                "issue_code",
+                "issue_name",
+                "market_type",
+                "industry",
+                "end_value",
+                "compared",
+                "fluctuation_rate",
+                "market_cap",
+                "issue_name_right",
+                "end_value_right",
+                "compared_right",
+                "fluctuation_rate_right",
+                "eps",
+                "per",
+                "leading_eps",
+                "leading_per",
+                "bps",
+                "pbr",
+                "dps",
+                "dyr"
+            ]
+        )
+    }
 }
