@@ -8,7 +8,10 @@ pub fn merge_sector_individual<'a>(
     let sector_df = LazyFrame::scan_parquet(sector_path, Default::default())?;
     let indi_df = LazyFrame::scan_parquet(indi_path, Default::default())?;
     // 2. Inner Join
-    let merged = sector_df.inner_join(indi_df, col("issue_code"), col("issue_code"));
+    let merged = sector_df
+        .inner_join(indi_df, col("issue_code"), col("issue_code"))
+        .filter(col("issue_name").str().contains("스팩")) // filter out spac company
+        .filter(col("issue_code").str().contains("0$")); // remove preferred stock (code ends with zero)
     Ok(merged)
 }
 
@@ -42,10 +45,7 @@ pub fn get_common_columns<'a>(
 
 #[cfg(test)]
 mod test {
-    use {
-        insta::assert_snapshot,
-        {super::*, std::collections::HashSet},
-    };
+    use {super::*, insta::assert_snapshot, std::collections::HashSet};
 
     #[test]
     fn find_out_common_columns() {

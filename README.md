@@ -11,12 +11,12 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 - [x] Get WICS sector info from _WiseIndex_.
 - [ ] Get adjusted closing price.
 - [ ] Get daily stock price for individual issue, from _Naver Finance_.
-- [ ] Combine KRX*IND & KRX_SEC using data from \_KRX*.
+- [x] Combine individual & sector info from _KRX_.
   - [x] Get OTP for KOSPI & KOSDAQ.
   - [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
   - [x] KRX_IND PER/PBR/Dividend for individual issue.
   - [x] Merge KRX_SEC and KRX_IND, remove intersections with none-sense data.
-  - [ ] Ignore preferred stock.
+  - [x] Ignore preferred stock & spac stock.
 
 ### Organizing & Visualizing data
 
