@@ -28,8 +28,27 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 
 ## Testing
 
+### Normal testing
+
 ```bash
 $ cargo test
+
 # If snapshot isn't fully updated,
 $ cargo insta test --review
+```
+
+### Code Coverage
+
+```bash
+# Generate source testing profile
+$ CARGO_INCREMENTAL=0 \
+        RUSTFLAGS='-Cinstrument-coverage' \
+        LLVM_PROFILE_FILE='profile/cargo-test-%p-%m.profraw' \
+        cargo test
+
+# Generate coverage result in target/coverage/html/index.html
+$ grcov profile \
+        --binary-path ./target/debug/deps/ \
+        -s . -t html --branch --ignore-not-existing \
+        --ignore '../*' --ignore "/*" -o target/coverage/html
 ```
