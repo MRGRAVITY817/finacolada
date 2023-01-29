@@ -29,4 +29,14 @@ mod test {
         assert!(parse_to_naive_date(too_short).is_err());
         assert!(parse_to_naive_date(just_right).is_ok());
     }
+
+    #[test]
+    fn given_date_should_be_valid_date() {
+        // Arrange
+        let wrong_date = "20231322";
+        let correct_date = "19940817";
+        // Act & Assert
+        assert!(parse_to_naive_date(wrong_date).is_err());
+        assert!(parse_to_naive_date(correct_date).is_ok());
+    }
 }

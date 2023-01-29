@@ -34,6 +34,6 @@ mod test {
                 .await
                 .unwrap();
         // Assert
-        assert_snapshot!(result, @"")
+        assert_snapshot!(result, @"result")
     }
 }
