@@ -1,5 +1,5 @@
 use {
-    crate::data_crawling::krx::{KrxIndividualRow, KrxSectorRow},
+    super::{KrxIndividualRow, KrxSectorRow},
     calamine::{open_workbook, DeError, RangeDeserializerBuilder, Reader, Xlsx},
     polars::prelude::*,
 };
@@ -71,7 +71,7 @@ pub fn convert_individual_xlsx_to_parquet<'a>(
 
 #[cfg(test)]
 mod test {
-    use {super::*, insta::assert_snapshot};
+    use {super::*, insta::*};
 
     #[test]
     fn can_read_converted_sector_parquet_as_lazyframe() {
