@@ -9,8 +9,14 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 
 - [x] Get the latest biz day from _Naver Finance_.
 - [x] Get WICS sector info from _WiseIndex_.
-- [ ] Get adjusted closing price.
-- [ ] Get daily stock price for individual issue, from _Naver Finance_.
+- [x] Get daily stock price for individual issue, from _Naver Finance_.
+- [ ] Get financial statements from _FN Guide_.
+  - [ ] Calculate value metrics (PER, PBR, PCR, etc...).
+- [ ] Get various data from _DART_.
+  - [ ] Use provided API to get data.
+  - [ ] Design the the data pipeline for these data.
+  - [ ] Get disclosure info.
+  - [ ] Get business report.
 - [x] Combine individual & sector info from _KRX_.
   - [x] Get OTP for KOSPI & KOSDAQ.
   - [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
