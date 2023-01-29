@@ -10,11 +10,23 @@ pub async fn get_stock_price_by_ticker_and_date_range(
     start_date: &str,
     end_date: &str,
 ) -> anyhow::Result<String> {
-    // start_date or end_date shouldn't be in future
-    // start_date shouldn't be later than end_date
+    let url = "https://api.finance.naver.com/siseJson.naver";
     // 1. Build the api call
+    let result = query_client
+        .get(url)
+        .query(&[
+            ("symbol", ticker),
+            ("requestType", "1"),
+            ("startTime", start_date),
+            ("endTime", end_date),
+            ("timeframe", "day"),
+        ])
+        .send()
+        .await?
+        .text()
+        .await?;
     // 2. Return the text
-    Ok("result".to_string())
+    Ok(result)
 }
 
 #[cfg(test)]
@@ -34,6 +46,22 @@ mod test {
                 .await
                 .unwrap();
         // Assert
-        assert_snapshot!(result, @"result")
+        assert_snapshot!(result, @r###"
+
+         [['날짜', '시가', '고가', '저가', '종가', '거래량', '외국인소진율'],
+
+        	
+        	
+        		
+        ["20221102", 59700, 60000, 59300, 59600, 13202919, 49.84],
+        		
+        ["20221103", 58600, 59800, 58100, 59200, 17492162, 49.87],
+        		
+        ["20221104", 59100, 59500, 58400, 59400, 12445841, 49.84]
+        		
+        	
+
+        ]
+        "###)
     }
 }
