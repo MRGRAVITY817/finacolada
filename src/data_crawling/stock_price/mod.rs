@@ -7,9 +7,13 @@
 pub async fn get_stock_price_by_ticker_and_date_range(
     query_client: &reqwest::Client,
     ticker: &str,
-    start_date: Option<&str>,
-    end_date: Option<&str>,
+    start_date: &str,
+    end_date: &str,
 ) -> anyhow::Result<String> {
+    // start_date or end_date shouldn't be in future
+    // start_date shouldn't be later than end_date
+    // 1. Build the api call
+    // 2. Return the text
     Ok("result".to_string())
 }
 
@@ -22,8 +26,8 @@ mod test {
         // Arrange
         let client = reqwest::Client::new();
         let samsung_ticker = "005930";
-        let start_date = Some("20221102");
-        let end_date = Some("20221104");
+        let start_date = "20221102";
+        let end_date = "20221104";
         // Act
         let result =
             get_stock_price_by_ticker_and_date_range(&client, samsung_ticker, start_date, end_date)
