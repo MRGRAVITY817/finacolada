@@ -1,15 +1,10 @@
-// symbol: 005930
-// requestType: 1
-// startTime: 20210821
-// endTime: 20220506
-// timeframe: day
-
+/// Return result of (trade_date, closing_value)
 pub async fn get_stock_price_by_ticker_and_date_range(
     query_client: &reqwest::Client,
     ticker: &str,
     start_date: &str,
     end_date: &str,
-) -> anyhow::Result<Vec<String>> {
+) -> anyhow::Result<Vec<(String, u32)>> {
     let url = "https://api.finance.naver.com/siseJson.naver";
     // 1. Build the api call
     let result = query_client
@@ -35,13 +30,21 @@ pub async fn get_stock_price_by_ticker_and_date_range(
         .to_string();
     // 3. Get string vectors
     let vectorized: Vec<String> = ron::from_str(&preprocessed)?;
+    let result = vectorized[1..]
+        .into_iter()
+        .map(|row| -> anyhow::Result<(String, u32)> {
+            let preprocessed = row.replace("[", "(").replace("]", ")").replace("'", "\"");
+            let row_tuple: (String, u32, u32, u32, u32, u32, f32) = ron::from_str(&preprocessed)?;
+            Ok((row_tuple.0, row_tuple.4))
+        })
+        .collect::<anyhow::Result<Vec<(String, u32)>>>()?;
 
-    Ok(vectorized[1..].to_vec())
+    Ok(result)
 }
 
 #[cfg(test)]
 mod test {
-    use {super::*, insta::assert_snapshot};
+    use super::*;
 
     #[tokio::test]
     async fn get_3_days_of_samsung_stock_price() {
@@ -56,8 +59,9 @@ mod test {
                 .await
                 .unwrap();
         // Assert
-        assert_snapshot!(result[0], @"['20221102', 59700, 60000, 59300, 59600, 13202919, 49.84]");
-        assert_snapshot!(result[1], @"['20221103', 58600, 59800, 58100, 59200, 17492162, 49.87]");
-        assert_snapshot!(result[2], @"['20221104', 59100, 59500, 58400, 59400, 12445841, 49.84]");
+        assert_eq!(result.len(), 3);
+        assert_eq!(result[0], ("20221102".to_string(), 59600));
+        assert_eq!(result[1], ("20221103".to_string(), 59200));
+        assert_eq!(result[2], ("20221104".to_string(), 59400));
     }
 }
