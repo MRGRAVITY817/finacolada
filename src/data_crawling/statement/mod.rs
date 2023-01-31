@@ -1,9 +1,68 @@
+use polars::{
+    prelude::{DataFrame, NamedFrom, ParquetWriter},
+    series::Series,
+};
 use scraper::{Html, Selector};
+
+const COMP_INCOME_STATEMENT_COLS: [&str; 1] = [""];
+const COMP_INCOME_STATEMENT_FILE_PATH: &'static str = "";
+const FIN_POSITION_STATEMENT_COLS: [&str; 1] = [""];
+const FIN_POSITION_STATEMENT_FILE_PATH: &'static str = "";
+const CASHFLOW_STATEMENT_COLS: [&str; 1] = [""];
+const CASHFLOW_STATEMENT_FILE_PATH: &'static str = "";
+
+fn parse_statement_table(
+    table_string: &str,
+    years: &[&str],
+    columns: &[&str],
+    file_path: &str,
+) -> anyhow::Result<()> {
+    // should provide only 3 years
+    if years.len().ne(&3) {
+        return Err(anyhow::Error::msg("Only 3 years are acceptable."));
+    }
+    // extract table from given string
+    let span_selector = Selector::parse("span").unwrap();
+    match table_extract::Table::find_first(table_string) {
+        Some(table) => {
+            // iterate every row
+            let series_vec = table
+                .into_iter()
+                .zip(columns)
+                .map(|(row, col)| {
+                    // 3. iterate every row data, and save these as u32
+                    let parsed_row = row.into_iter().take(3).map(|val| -> u32 {
+                        match Html::parse_fragment(&val).select(&span_selector).next() {
+                            Some(neg_number) => {
+                                neg_number.inner_html().to_string().parse().unwrap_or(0)
+                            }
+                            _ => {
+                                if val.contains("&nbsp;") {
+                                    return 0;
+                                }
+                                val.parse().unwrap_or(0)
+                            }
+                        }
+                    });
+                    Series::new(col, parsed_row.collect::<Vec<_>>())
+                })
+                .collect::<Vec<_>>();
+            // create dataframe
+            let df = DataFrame::new(series_vec)?;
+            // save it as parquet
+            let mut file = std::fs::File::create(file_path)?;
+            ParquetWriter::new(&mut file).finish(&mut df)?;
+            // if successful, return Ok(())
+            Ok(())
+        }
+        _ => Err(anyhow::Error::msg("Invalid table string")),
+    }
+}
 
 pub async fn get_financial_statement(
     query_client: &reqwest::Client,
     ticker: &str,
-) -> anyhow::Result<Vec<String>> {
+) -> anyhow::Result<()> {
     let document = query_client
         .get("http://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp")
         .query(&[("pGB", "1"), ("gicode", &format!("A{ticker}"))])
@@ -16,45 +75,34 @@ pub async fn get_financial_statement(
     // Get <table /> element using selector
     let document = Html::parse_document(&document);
     let table_selector = Selector::parse("table").unwrap();
-    let span_selector = Selector::parse("span").unwrap();
     let tables = document
         .select(&table_selector)
-        .map(|selected| {
-            let table_html = selected.html();
-            match table_extract::Table::find_first(&table_html) {
-                Some(table) => table
-                    .into_iter()
-                    .map(|row| {
-                        row.into_iter()
-                            .map(|val| -> Option<f32> {
-                                match Html::parse_fragment(&val).select(&span_selector).next() {
-                                    Some(neg_number) => {
-                                        neg_number.inner_html().to_string().parse::<f32>().ok()
-                                    }
-                                    _ => {
-                                        if val.contains("&nbsp;") {
-                                            return None;
-                                        }
-                                        val.parse::<f32>().ok()
-                                    }
-                                }
-                            })
-                            .collect::<Vec<_>>()
-                    })
-                    .reduce(|rows_above, row| format!("{rows_above} \n {row}"))
-                    .unwrap_or("".to_string()),
-                _ => "".to_string(),
-            }
-        })
+        .map(|selected| selected.html())
         .collect::<Vec<_>>();
-
+    let years = ["2019", "2020", "2021"];
     // Table 1. Comprehensive income statement (annual)
-    // Table 2. Comprehensive income statement (quarterly)
+    parse_statement_table(
+        &tables[0],
+        &years,
+        COMP_INCOME_STATEMENT_COLS,
+        COMP_INCOME_STATEMENT_FILE_PATH,
+    )?;
     // Table 3. Financial position statement (annual)
-    // Table 4. Financial position statement (quarterly)
+    parse_statement_table(
+        &tables[2],
+        &years,
+        FIN_POSITION_STATEMENT_COLS,
+        FIN_POSITION_STATEMENT_FILE_PATH,
+    )?;
     // Table 5. Cashflow statement (annual)
-    // Table 6. Cashflow statement (quarterly)
-    Ok(tables)
+    parse_statement_table(
+        &tables[4],
+        &years,
+        CASHFLOW_STATEMENT_COLS,
+        CASHFLOW_STATEMENT_FILE_PATH,
+    )?;
+
+    Ok(())
 }
 
 #[cfg(test)]
@@ -85,9 +133,8 @@ mod test {
         // Assert
         assert_eq!(result.len(), 3);
     }
-}
 
-const TABLE_STRING: &'static str = r#"
+    const TABLE_STRING: &'static str = r#"
 <table  class="us_table_ty1 h_fix zigbg_no" >
 <caption class="cphidden">재무상태표</caption>
 <colgroup>
@@ -1069,3 +1116,4 @@ const TABLE_STRING: &'static str = r#"
 </tbody>
 </table>
 "#;
+}
