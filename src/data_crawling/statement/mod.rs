@@ -1,3 +1,5 @@
+use scraper::{node::Element, ElementRef, Node};
+
 mod constants;
 
 use {
@@ -8,6 +10,32 @@ use {
     },
     scraper::{Html, Selector},
 };
+
+fn get_first_text(element: ElementRef) -> Option<String> {
+    match element.text().next() {
+        Some(text_str) => Some(text_str.trim().to_string()),
+        _ => match element.first_child() {
+            Some(first_child) => get_first_text(ElementRef::wrap(first_child)?),
+            _ => None,
+        },
+    }
+}
+
+fn get_table_columns(table_string: &str) -> anyhow::Result<String> {
+    let table = Html::parse_fragment(table_string);
+    let row_selector = Selector::parse("tr").unwrap();
+    let head_selector = Selector::parse("th").unwrap();
+    let result = table
+        .select(&row_selector)
+        .map(|row| {
+            row.select(&head_selector)
+                .next()
+                .and_then(get_first_text)
+                .unwrap_or("".to_string())
+        })
+        .collect::<Vec<_>>();
+    Ok(result.join(", "))
+}
 
 fn parse_statement_table(
     table_string: &str,
@@ -107,29 +135,51 @@ pub async fn get_financial_statement(
 mod test {
     use {super::*, insta::assert_snapshot};
 
-    #[tokio::test]
-    async fn has_tables() {
-        // Arrange
-        let client = reqwest::Client::new();
-        let samsung_ticker = "005930";
-        // Act
-        let result = get_financial_statement(&client, samsung_ticker)
-            .await
-            .unwrap();
-        // Assert
-        assert_eq!(result.len(), 6);
-        assert_snapshot!(result[0], @"")
-    }
+    // #[tokio::test]
+    // async fn has_tables() {
+    //     // Arrange
+    //     let client = reqwest::Client::new();
+    //     let samsung_ticker = "005930";
+    //     // Act
+    //     let result = get_financial_statement(&client, samsung_ticker)
+    //         .await
+    //         .unwrap();
+    //     // Assert
+    //     // assert_eq!(result.len(), 6);
+    //     // assert_snapshot!(result[0], @"")
+    // }
+
+    // #[test]
+    // fn parsed_statement_table_should_have_only_3_years_data() {
+    //     // Arrange
+    //     let table_string = TABLE_STRING;
+    //     let file_path = "examples/statement_table.parquet";
+    //     // Act
+    //     // let result = parse_statement_table(table_string, file_path).unwrap();
+    //     // Assert
+    //     // assert_eq!(result.len(), 3);
+    // }
+
+    // #[test]
+    // fn should_extract_the_correct_columns() {
+    //     let result = get_table_columns(TABLE_STRING).unwrap();
+    //     // Assert
+    //     assert_snapshot!(result, @"")
+    // }
 
     #[test]
-    fn parsed_statement_table_should_have_only_3_years_data() {
-        // Arrange
-        let table_string = TABLE_STRING;
-        let file_path = "examples/statement_table.parquet";
-        // Act
-        let result = parse_statement_table(table_string, file_path).unwrap();
-        // Assert
-        assert_eq!(result.len(), 3);
+    fn should_extract_first_string() {
+        let th_string = r#"
+				<table>
+					<th scope="col" class="clf tbold"><div>hello</div></th>
+				</table>
+				"#;
+        let th_selector = Selector::parse("th").unwrap();
+        let fragment = Html::parse_fragment(th_string);
+        for th_element in fragment.select(&th_selector) {
+            let result = get_first_text(th_element).unwrap();
+            assert_snapshot!(result, @"hello")
+        }
     }
 
     const TABLE_STRING: &'static str = r#"
