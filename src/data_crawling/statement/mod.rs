@@ -11,17 +11,21 @@ use {
     scraper::{Html, Selector},
 };
 
+/// Get first non-empty text from nested DOM structure.
 fn get_first_text(element: ElementRef) -> Option<String> {
     match element.text().next() {
+        // If the first child is non-empty text, that's the one we're looking for.
         Some(text_str) if text_str.trim().len() > 0 => Some(text_str.trim().to_string()),
-        Some(_) => match element.children().skip(1).next() {
-            Some(second_child) => get_first_text(ElementRef::wrap(second_child)?),
-            _ => None,
-        },
-        _ => match element.first_child() {
-            Some(first_child) => get_first_text(ElementRef::wrap(first_child)?),
-            _ => None,
-        },
+        // If the first child was empty text, try again with the second child.
+        Some(_) => element
+            .children()
+            .skip(1)
+            .next()
+            .and_then(|second_child| get_first_text(ElementRef::wrap(second_child)?)),
+        // If the first child isn't a text, try the element inside the first child.
+        _ => element
+            .first_child()
+            .and_then(|first_child| get_first_text(ElementRef::wrap(first_child)?)),
     }
 }
 
