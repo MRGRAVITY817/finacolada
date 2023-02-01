@@ -13,7 +13,11 @@ use {
 
 fn get_first_text(element: ElementRef) -> Option<String> {
     match element.text().next() {
-        Some(text_str) => Some(text_str.trim().to_string()),
+        Some(text_str) if text_str.trim().len() > 0 => Some(text_str.trim().to_string()),
+        Some(_) => match element.children().skip(1).next() {
+            Some(second_child) => get_first_text(ElementRef::wrap(second_child)?),
+            _ => None,
+        },
         _ => match element.first_child() {
             Some(first_child) => get_first_text(ElementRef::wrap(first_child)?),
             _ => None,
@@ -31,7 +35,7 @@ fn get_table_columns(table_string: &str) -> anyhow::Result<String> {
             row.select(&head_selector)
                 .next()
                 .and_then(get_first_text)
-                .unwrap_or("".to_string())
+                .unwrap_or("HAHAHA".to_string())
         })
         .collect::<Vec<_>>();
     Ok(result.join(", "))
@@ -160,18 +164,23 @@ mod test {
     //     // assert_eq!(result.len(), 3);
     // }
 
-    // #[test]
-    // fn should_extract_the_correct_columns() {
-    //     let result = get_table_columns(TABLE_STRING).unwrap();
-    //     // Assert
-    //     assert_snapshot!(result, @"")
-    // }
+    #[test]
+    fn should_extract_the_financial_position_table_columns() {
+        // Arrange
+        let input = TABLE_STRING;
+        // Act
+        let result = get_table_columns(input).unwrap();
+        // Assert
+        assert_snapshot!(result, @"IFRS(연결), 자산, 유동자산, 재고자산, 유동생물자산, 유동금융자산, 매출채권및기타유동채권, 당기법인세자산, 계약자산, 반품(환불)자산, 배출권, 기타유동자산, 현금및현금성자산, 매각예정비유동자산및처분자산집단, 비유동자산, 유형자산, 무형자산, 비유동생물자산, 투자부동산, 장기금융자산, 관계기업등지분관련투자자산, 장기매출채권및기타비유동채권, 이연법인세자산, 장기당기법인세자산, 계약자산, 반품(환불)자산, 배출권, 기타비유동자산, 기타금융업자산, 부채, 유동부채, 단기사채, 단기차입금, 유동성장기부채, 유동금융부채, 매입채무및기타유동채무, 유동종업원급여충당부채, 기타단기충당부채, 당기법인세부채, 계약부채, 반품(환불)부채, 배출부채, 기타유동부채, 매각예정으로분류된처분자산집단에포함된부채, 비유동부채, 사채, 장기차입금, 비유동금융부채, 장기매입채무및기타비유동채무, 비유동종업원급여충당부채, 기타장기충당부채, 이연법인세부채, 장기당기법인세부채, 계약부채, 반품(환불)부채, 배출부채, 기타비유동부채, 기타금융업부채, 자본, 지배기업주주지분, 자본금, 신종자본증권, 자본잉여금, 기타자본, 기타포괄손익누계액, 이익잉여금(결손금), 비지배주주지분")
+    }
 
     #[test]
     fn should_extract_first_string() {
         let th_string = r#"
 				<table>
-					<th scope="col" class="clf tbold"><div>hello</div></th>
+					<th scope="col" class="clf tbold">
+					<div>hello</div>
+					</th>
 				</table>
 				"#;
         let th_selector = Selector::parse("th").unwrap();
