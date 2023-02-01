@@ -242,6 +242,27 @@ mod test {
     }
 
     #[test]
+    fn extract_nested_row_data_as_vector() {
+        let input = r#"
+				<table>
+					<tr>
+						<th>Hello</th>
+						<td>1</td>
+						<td><span>2</span></td>
+						<td>3</td>
+					</tr>
+				</table>
+			"#;
+        let tr_selector = Selector::parse("tr").unwrap();
+        let fragment = Html::parse_fragment(input);
+        let mut selected = fragment.select(&tr_selector);
+
+        let result = get_row_data(selected.next().unwrap()).unwrap();
+
+        assert_eq!(result, vec![1, 2, 3])
+    }
+
+    #[test]
     fn should_extract_first_string() {
         let th_string = r#"
 				<table>
