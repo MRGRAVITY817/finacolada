@@ -1,15 +1,13 @@
-use polars::{
-    prelude::{DataFrame, NamedFrom, ParquetWriter},
-    series::Series,
-};
-use scraper::{Html, Selector};
+mod constants;
 
-const COMP_INCOME_STATEMENT_COLS: [&str; 1] = [""];
-const COMP_INCOME_STATEMENT_FILE_PATH: &'static str = "";
-const FIN_POSITION_STATEMENT_COLS: [&str; 1] = [""];
-const FIN_POSITION_STATEMENT_FILE_PATH: &'static str = "";
-const CASHFLOW_STATEMENT_COLS: [&str; 1] = [""];
-const CASHFLOW_STATEMENT_FILE_PATH: &'static str = "";
+use {
+    self::constants::*,
+    polars::{
+        prelude::{DataFrame, NamedFrom, ParquetWriter},
+        series::Series,
+    },
+    scraper::{Html, Selector},
+};
 
 fn parse_statement_table(
     table_string: &str,
@@ -48,7 +46,7 @@ fn parse_statement_table(
                 })
                 .collect::<Vec<_>>();
             // create dataframe
-            let df = DataFrame::new(series_vec)?;
+            let mut df = DataFrame::new(series_vec)?;
             // save it as parquet
             let mut file = std::fs::File::create(file_path)?;
             ParquetWriter::new(&mut file).finish(&mut df)?;
@@ -84,22 +82,22 @@ pub async fn get_financial_statement(
     parse_statement_table(
         &tables[0],
         &years,
-        COMP_INCOME_STATEMENT_COLS,
-        COMP_INCOME_STATEMENT_FILE_PATH,
+        &COMP_INCOME_STATEMENT_COLS,
+        &COMP_INCOME_STATEMENT_FILE_PATH,
     )?;
     // Table 3. Financial position statement (annual)
     parse_statement_table(
         &tables[2],
         &years,
-        FIN_POSITION_STATEMENT_COLS,
-        FIN_POSITION_STATEMENT_FILE_PATH,
+        &FIN_POSITION_STATEMENT_COLS,
+        &FIN_POSITION_STATEMENT_FILE_PATH,
     )?;
     // Table 5. Cashflow statement (annual)
     parse_statement_table(
         &tables[4],
         &years,
-        CASHFLOW_STATEMENT_COLS,
-        CASHFLOW_STATEMENT_FILE_PATH,
+        &CASHFLOW_STATEMENT_COLS,
+        &CASHFLOW_STATEMENT_FILE_PATH,
     )?;
 
     Ok(())
