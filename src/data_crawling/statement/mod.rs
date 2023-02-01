@@ -181,6 +181,22 @@ mod test {
     }
 
     #[test]
+    fn extract_asset_as_row_header() {
+        let input = r#"
+			<tr>
+				<th>Hello</th>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+			</tr>
+			"#;
+
+        let result = get_row_header(input).unwrap();
+
+        assert_eq!(result, "Hello")
+    }
+
+    #[test]
     fn should_extract_first_string() {
         let th_string = r#"
 				<table>
