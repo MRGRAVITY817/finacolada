@@ -189,7 +189,7 @@ mod test {
     }
 
     #[test]
-    fn extract_asset_as_row_header() {
+    fn extract_row_header() {
         let input = r#"
 				<table>
 					<tr>
@@ -207,6 +207,27 @@ mod test {
             let result = get_row_header(row_element).unwrap();
             assert_eq!(result, "Hello")
         }
+    }
+
+    #[test]
+    fn extract_row_data_as_vector() {
+        let input = r#"
+				<table>
+					<tr>
+						<th>Hello</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+					</tr>
+				</table>
+			"#;
+        let tr_selector = Selector::parse("tr").unwrap();
+        let fragment = Html::parse_fragment(input);
+        let mut selected = fragment.select(&tr_selector);
+
+        let result = get_row_data(selected.next().unwrap());
+
+        assert_eq!(result, vec![1, 2, 3])
     }
 
     #[test]
