@@ -11,6 +11,7 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 - [x] Get WICS sector info from _WiseIndex_.
 - [x] Get daily stock price for individual issue, from _Naver Finance_.
 - [ ] Get financial statements from _FN Guide_.
+  - [ ] Save annual data of each ticker into parquet file.
   - [ ] Calculate value metrics (PER, PBR, PCR, etc...).
 - [ ] Get various data from _DART_.
   - [ ] Use provided API to get data.
