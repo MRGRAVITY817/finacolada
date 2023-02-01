@@ -1,3 +1,5 @@
+use std::num::ParseIntError;
+
 mod constants;
 mod test_mock;
 
@@ -34,6 +36,15 @@ fn get_row_header(row_element: ElementRef) -> Option<String> {
         .select(&head_selector)
         .next()
         .and_then(get_first_text)
+}
+
+fn get_row_data(row_element: ElementRef) -> Result<Vec<u32>, ParseIntError> {
+    let head_selector = Selector::parse("td").unwrap();
+    row_element
+        .select(&head_selector)
+        .map(get_first_text)
+        .map(|k| k.unwrap_or("0".to_string()).parse())
+        .collect()
 }
 
 fn get_table_columns(table_string: &str) -> anyhow::Result<String> {
@@ -225,7 +236,7 @@ mod test {
         let fragment = Html::parse_fragment(input);
         let mut selected = fragment.select(&tr_selector);
 
-        let result = get_row_data(selected.next().unwrap());
+        let result = get_row_data(selected.next().unwrap()).unwrap();
 
         assert_eq!(result, vec![1, 2, 3])
     }
