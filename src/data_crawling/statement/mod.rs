@@ -28,6 +28,14 @@ fn get_first_text(element: ElementRef) -> Option<String> {
     }
 }
 
+fn get_row_header(row_element: ElementRef) -> Option<String> {
+    let head_selector = Selector::parse("th").unwrap();
+    row_element
+        .select(&head_selector)
+        .next()
+        .and_then(get_first_text)
+}
+
 fn get_table_columns(table_string: &str) -> anyhow::Result<String> {
     let table = Html::parse_fragment(table_string);
     let row_selector = Selector::parse("tr").unwrap();
@@ -183,17 +191,22 @@ mod test {
     #[test]
     fn extract_asset_as_row_header() {
         let input = r#"
-			<tr>
-				<th>Hello</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-			</tr>
+				<table>
+					<tr>
+						<th>Hello</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+					</tr>
+				</table>
 			"#;
-
-        let result = get_row_header(input).unwrap();
-
-        assert_eq!(result, "Hello")
+        let tr_selector = Selector::parse("tr").unwrap();
+        let fragment = Html::parse_fragment(input);
+        let selected = fragment.select(&tr_selector);
+        for row_element in selected {
+            let result = get_row_header(row_element).unwrap();
+            assert_eq!(result, "Hello")
+        }
     }
 
     #[test]
