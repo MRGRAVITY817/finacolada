@@ -2511,3 +2511,2295 @@ pub const FIN_POSITION_TABLE: &'static str = r#"
 </tbody>
 </table>
 "#;
+
+pub const CASHFLOW_TABLE: &'static str = r#"
+                                <table  class="us_table_ty1 h_fix zigbg_no" >
+                                    <caption class="cphidden">현금흐름표</caption>
+                                    <colgroup>
+                                        <col style="width: 40%;">
+                                            
+                                                <col >
+                                            
+                                                <col >
+                                            
+                                                <col >
+                                            
+                                                <col >
+                                            
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="clf tbold">IFRS(연결)</th>
+                                            
+                                                <th scope="col">2019/12</th>
+                                            
+                                                <th scope="col">2020/12</th>
+                                            
+                                                <th scope="col">2021/12</th>
+                                            
+                                                <th scope="col">2022/09</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                                    <tr class="rwf rowBold">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="th_b">영업활동으로인한현금흐름</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="453,829.15">453,829</td>
+                                                            
+                                                                <td class="r" title="652,870.09">652,870</td>
+                                                            
+                                                                <td class="r" title="651,054.48">651,054</td>
+                                                            
+                                                                <td class="r cle" title="435,684.46">435,684</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">&nbsp;&nbsp;&nbsp;당기순손익</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="217,388.65">217,389</td>
+                                                            
+                                                                <td class="r" title="264,078.32">264,078</td>
+                                                            
+                                                                <td class="r" title="399,074.50">399,075</td>
+                                                            
+                                                                <td class="r cle" title="318,126.31">318,126</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">&nbsp;&nbsp;&nbsp;법인세비용차감전계속사업이익</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_4" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;현금유출이없는비용등가산</span><a id="grid3_4" href="javascript:foldOpen('grid3_4');" class=" btn_acdopen"><span class="blind" id="span_grid3_4">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="424,268.48">424,268</td>
+                                                            
+                                                                <td class="r" title="461,506.14">461,506</td>
+                                                            
+                                                                <td class="r" title="527,991.04">527,991</td>
+                                                            
+                                                                <td class="r cle" title="486,690.43">486,690</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;퇴직급여</th>
+                                                            
+                                                                <td class="r" title="11,716.06">11,716</td>
+                                                            
+                                                                <td class="r" title="12,901.79">12,902</td>
+                                                            
+                                                                <td class="r" title="13,603.44">13,603</td>
+                                                            
+                                                                <td class="r cle" title="10,402.41">10,402</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;종업원급여</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;주식보상비</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;대손상각비</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="400.06">400</td>
+                                                            
+                                                                <td class="r" title="179.90">180</td>
+                                                            
+                                                                <td class="r cle" title="397.55">398</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;감가상각비</th>
+                                                            
+                                                                <td class="r" title="265,738.16">265,738</td>
+                                                            
+                                                                <td class="r" title="271,157.35">271,157</td>
+                                                            
+                                                                <td class="r" title="312,852.09">312,852</td>
+                                                            
+                                                                <td class="r cle" title="271,089.61">271,090</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;무형자산상각비</th>
+                                                            
+                                                                <td class="r" title="30,238.22">30,238</td>
+                                                            
+                                                                <td class="r" title="32,198.81">32,199</td>
+                                                            
+                                                                <td class="r" title="29,621.52">29,622</td>
+                                                            
+                                                                <td class="r cle" title="23,496.40">23,496</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계약부채전입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;반품(환불)부채전입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배출부채전입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;충당부채전입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;외환손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타의대손상각비</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융원가</th>
+                                                            
+                                                                <td class="r" title="20,345.18">20,345</td>
+                                                            
+                                                                <td class="r" title="23,067.70">23,068</td>
+                                                            
+                                                                <td class="r" title="19,177.05">19,177</td>
+                                                            
+                                                                <td class="r cle" title="50,115.92">50,116</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자비용</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금지급</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;매출채권처분손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;당기손익-공정가치측정&nbsp;금융자산관련손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융자산처분손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융자산평가손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융자산손상차손</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;파생상품손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융부채관련손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사채상환손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;재고자산감모손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;재고자산폐기(처분)손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산처분(폐기)손실</th>
+                                                            
+                                                                <td class="r" title="1,445.47">1,445</td>
+                                                            
+                                                                <td class="r" title="876.73">877</td>
+                                                            
+                                                                <td class="r" title="755.86">756</td>
+                                                            
+                                                                <td class="r cle" title="347.98">348</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;투자자산평가손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산재평가손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산손상차손</th>
+                                                            
+                                                                <td class="r" title="7,852.15">7,852</td>
+                                                            
+                                                                <td class="r" title="10,007.63">10,008</td>
+                                                            
+                                                                <td class="r" title="17,357.41">17,357</td>
+                                                            
+                                                                <td class="r cle" title="33,361.20">33,361</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;지분법관련손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;종속기업관련손실</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관계기업관련손익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세비용</th>
+                                                            
+                                                                <td class="r" title="86,933.24">86,933</td>
+                                                            
+                                                                <td class="r" title="99,372.85">99,373</td>
+                                                            
+                                                                <td class="r" title="134,443.77">134,444</td>
+                                                            
+                                                                <td class="r cle" title="95,729.25">95,729</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_4 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타비용</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="11,523.22">11,523</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="1,750.11">1,750</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_5" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;(현금유입이없는수익등차감)</span><a id="grid3_5" href="javascript:foldOpen('grid3_5');" class=" btn_acdopen"><span class="blind" id="span_grid3_5">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="49,841.66">49,842</td>
+                                                            
+                                                                <td class="r" title="45,320.60">45,321</td>
+                                                            
+                                                                <td class="r" title="37,434.71">37,435</td>
+                                                            
+                                                                <td class="r cle" title="70,340.88">70,341</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;외환이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;대손충당금환입액</th>
+                                                            
+                                                                <td class="r" title="1,833.80">1,834</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융수익</th>
+                                                            
+                                                                <td class="r" title="38,314.28">38,314</td>
+                                                            
+                                                                <td class="r" title="37,188.41">37,188</td>
+                                                            
+                                                                <td class="r" title="24,856.79">24,857</td>
+                                                            
+                                                                <td class="r cle" title="57,200.68">57,201</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자수익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금수익</th>
+                                                            
+                                                                <td class="r" title="1,546.79">1,547</td>
+                                                            
+                                                                <td class="r" title="1,524.40">1,524</td>
+                                                            
+                                                                <td class="r" title="1,358.40">1,358</td>
+                                                            
+                                                                <td class="r cle" title="3,735.28">3,735</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;매출채권처분이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;당기손익-공정가치측정&nbsp;금융자산관련이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융자산처분이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융자산평가이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융자산손상차손환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;파생상품이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금융부채관련이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사채상환이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;퇴직급여충당부채환입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계약부채환입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;반품(환불)부채환입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배출부채환입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;충당부채환입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;주식보상비환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;재고자산감모손실환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;재고자산폐기(처분)이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산처분(폐기)이익</th>
+                                                            
+                                                                <td class="r" title="3,524.36">3,524</td>
+                                                            
+                                                                <td class="r" title="1,542.49">1,542</td>
+                                                            
+                                                                <td class="r" title="3,404.00">3,404</td>
+                                                            
+                                                                <td class="r cle" title="1,359.40">1,359</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;투자자산평가이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산재평가이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산손상차손환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;지분법관련이익</th>
+                                                            
+                                                                <td class="r" title="4,129.60">4,130</td>
+                                                            
+                                                                <td class="r" title="5,065.30">5,065</td>
+                                                            
+                                                                <td class="r" title="7,296.14">7,296</td>
+                                                            
+                                                                <td class="r cle" title="8,045.52">8,046</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;종속회사관련이익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관계기업관련손익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세수익</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_5 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타수익</th>
+                                                            
+                                                                <td class="r" title="492.83">493</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="519.38">519</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_6" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;영업활동으로인한자산부채변동(운전자본변동)</span><a id="grid3_6" href="javascript:foldOpen('grid3_6');" class=" btn_acdopen"><span class="blind" id="span_grid3_6">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="-25,457.56"><span class='tcr'>-25,458</span></td>
+                                                            
+                                                                <td class="r" title="1,224.24">1,224</td>
+                                                            
+                                                                <td class="r" title="-162,868.84"><span class='tcr'>-162,869</span></td>
+                                                            
+                                                                <td class="r cle" title="-218,390.75"><span class='tcr'>-218,391</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_6 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자산의감소(증가)</th>
+                                                            
+                                                                <td class="r" title="38,981.37">38,981</td>
+                                                            
+                                                                <td class="r" title="-58,160.69"><span class='tcr'>-58,161</span></td>
+                                                            
+                                                                <td class="r" title="-174,243.02"><span class='tcr'>-174,243</span></td>
+                                                            
+                                                                <td class="r cle" title="-139,856.25"><span class='tcr'>-139,856</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_6 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;부채의증가(감소)</th>
+                                                            
+                                                                <td class="r" title="-57,967.40"><span class='tcr'>-57,967</span></td>
+                                                            
+                                                                <td class="r" title="76,163.60">76,164</td>
+                                                            
+                                                                <td class="r" title="45,247.80">45,248</td>
+                                                            
+                                                                <td class="r cle" title="-66,470.49"><span class='tcr'>-66,470</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_6 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;정부보조금등의변동</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_6 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타운전자본의변동</th>
+                                                            
+                                                                <td class="r" title="-6,471.53"><span class='tcr'>-6,472</span></td>
+                                                            
+                                                                <td class="r" title="-16,778.67"><span class='tcr'>-16,779</span></td>
+                                                            
+                                                                <td class="r" title="-33,873.62"><span class='tcr'>-33,874</span></td>
+                                                            
+                                                                <td class="r cle" title="-12,064.01"><span class='tcr'>-12,064</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">&nbsp;&nbsp;&nbsp;*영업에서창출된현금흐름</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="566,357.91">566,358</td>
+                                                            
+                                                                <td class="r" title="681,488.10">681,488</td>
+                                                            
+                                                                <td class="r" title="726,761.99">726,762</td>
+                                                            
+                                                                <td class="r cle" title="516,085.11">516,085</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_8" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;기타영업활동으로인한현금흐름</span><a id="grid3_8" href="javascript:foldOpen('grid3_8');" class=" btn_acdopen"><span class="blind" id="span_grid3_8">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="-112,528.76"><span class='tcr'>-112,529</span></td>
+                                                            
+                                                                <td class="r" title="-28,618.01"><span class='tcr'>-28,618</span></td>
+                                                            
+                                                                <td class="r" title="-75,707.51"><span class='tcr'>-75,708</span></td>
+                                                            
+                                                                <td class="r cle" title="-80,400.65"><span class='tcr'>-80,401</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자수입</th>
+                                                            
+                                                                <td class="r" title="23,064.01">23,064</td>
+                                                            
+                                                                <td class="r" title="22,202.09">22,202</td>
+                                                            
+                                                                <td class="r" title="14,067.06">14,067</td>
+                                                            
+                                                                <td class="r cle" title="12,295.43">12,295</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자지급(-)</th>
+                                                            
+                                                                <td class="r" title="-5,799.79"><span class='tcr'>-5,800</span></td>
+                                                            
+                                                                <td class="r" title="-5,553.21"><span class='tcr'>-5,553</span></td>
+                                                            
+                                                                <td class="r" title="-4,344.41"><span class='tcr'>-4,344</span></td>
+                                                            
+                                                                <td class="r cle" title="-4,810.29"><span class='tcr'>-4,810</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금수입</th>
+                                                            
+                                                                <td class="r" title="2,418.01">2,418</td>
+                                                            
+                                                                <td class="r" title="2,436.66">2,437</td>
+                                                            
+                                                                <td class="r" title="2,990.33">2,990</td>
+                                                            
+                                                                <td class="r cle" title="4,899.67">4,900</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금지급(-)</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세납부(-)</th>
+                                                            
+                                                                <td class="r" title="-132,210.99"><span class='tcr'>-132,211</span></td>
+                                                            
+                                                                <td class="r" title="-47,703.55"><span class='tcr'>-47,704</span></td>
+                                                            
+                                                                <td class="r" title="-88,420.49"><span class='tcr'>-88,420</span></td>
+                                                            
+                                                                <td class="r cle" title="-92,785.46"><span class='tcr'>-92,785</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_8 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;중단영업관련현금흐름</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf rowBold">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="th_b">투자활동으로인한현금흐름</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="-399,481.71"><span class='tcr'>-399,482</span></td>
+                                                            
+                                                                <td class="r" title="-536,285.91"><span class='tcr'>-536,286</span></td>
+                                                            
+                                                                <td class="r" title="-330,477.63"><span class='tcr'>-330,478</span></td>
+                                                            
+                                                                <td class="r cle" title="-279,528.27"><span class='tcr'>-279,528</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_10" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;투자활동으로인한현금유입액</span><a id="grid3_10" href="javascript:foldOpen('grid3_10');" class=" btn_acdopen"><span class="blind" id="span_grid3_10">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="63,007.75">63,008</td>
+                                                            
+                                                                <td class="r" title="155,516.79">155,517</td>
+                                                            
+                                                                <td class="r" title="254,825.06">254,825</td>
+                                                            
+                                                                <td class="r cle" title="134,745.10">134,745</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유동금융자산의감소</th>
+                                                            
+                                                                <td class="r" title="11,354.62">11,355</td>
+                                                            
+                                                                <td class="r" title="29,836.07">29,836</td>
+                                                            
+                                                                <td class="r" title="142,179.22">142,179</td>
+                                                            
+                                                                <td class="r cle" title="63,508.80">63,509</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장기금융상품의감소</th>
+                                                            
+                                                                <td class="r" title="45,866.10">45,866</td>
+                                                            
+                                                                <td class="r" title="121,843.01">121,843</td>
+                                                            
+                                                                <td class="r" title="102,160.82">102,161</td>
+                                                            
+                                                                <td class="r cle" title="68,964.13">68,964</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;매도가능금융자산의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;만기보유금융자산의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장기대여금의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;파생상품의변동</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타비유동금융자산의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관계기업등지분관련투자자산의감소</th>
+                                                            
+                                                                <td class="r" title="121.49">121</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="191.69">192</td>
+                                                            
+                                                                <td class="r cle" title="132.33">132</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유형자산의감소</th>
+                                                            
+                                                                <td class="r" title="5,132.65">5,133</td>
+                                                            
+                                                                <td class="r" title="3,767.44">3,767</td>
+                                                            
+                                                                <td class="r" title="3,582.84">3,583</td>
+                                                            
+                                                                <td class="r cle" title="1,905.22">1,905</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;무형자산의감소</th>
+                                                            
+                                                                <td class="r" title="72.41">72</td>
+                                                            
+                                                                <td class="r" title="70.27">70</td>
+                                                            
+                                                                <td class="r" title="17.52">18</td>
+                                                            
+                                                                <td class="r cle" title="234.62">235</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;생물자산의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;투자부동산의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_10 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타투자활동으로인한현금유입액</th>
+                                                            
+                                                                <td class="r" title="460.48">460</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="6,692.97">6,693</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_11" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;(투자활동으로인한현금유출액)</span><a id="grid3_11" href="javascript:foldOpen('grid3_11');" class=" btn_acdopen"><span class="blind" id="span_grid3_11">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="462,489.46">462,489</td>
+                                                            
+                                                                <td class="r" title="691,802.70">691,803</td>
+                                                            
+                                                                <td class="r" title="585,302.69">585,303</td>
+                                                            
+                                                                <td class="r cle" title="414,273.37">414,273</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유동금융자산의증가</th>
+                                                            
+                                                                <td class="r" title="38,736.28">38,736</td>
+                                                            
+                                                                <td class="r" title="206,992.97">206,993</td>
+                                                            
+                                                                <td class="r" title="16,664.22">16,664</td>
+                                                            
+                                                                <td class="r cle" title="1,556.85">1,557</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장기금융상품의증가</th>
+                                                            
+                                                                <td class="r" title="127,254.65">127,255</td>
+                                                            
+                                                                <td class="r" title="80,192.63">80,193</td>
+                                                            
+                                                                <td class="r" title="69,818.10">69,818</td>
+                                                            
+                                                                <td class="r cle" title="43,940.20">43,940</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;매도가능금융자산의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;만기보유금융자산의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장기대여금의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;파생상품의변동</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타비유동금융자산의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관계기업등지분관련투자자산의증가</th>
+                                                            
+                                                                <td class="r" title="127.78">128</td>
+                                                            
+                                                                <td class="r" title="832.80">833</td>
+                                                            
+                                                                <td class="r" title="470.90">471</td>
+                                                            
+                                                                <td class="r cle" title="9,037.58">9,038</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유형자산의증가</th>
+                                                            
+                                                                <td class="r" title="253,677.56">253,678</td>
+                                                            
+                                                                <td class="r" title="375,920.34">375,920</td>
+                                                            
+                                                                <td class="r" title="471,221.06">471,221</td>
+                                                            
+                                                                <td class="r cle" title="324,713.28">324,713</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;무형자산의증가</th>
+                                                            
+                                                                <td class="r" title="32,499.14">32,499</td>
+                                                            
+                                                                <td class="r" title="26,797.79">26,798</td>
+                                                            
+                                                                <td class="r" title="27,069.15">27,069</td>
+                                                            
+                                                                <td class="r cle" title="31,894.59">31,895</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;생물자산의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;투자부동산의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_11 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타투자활동으로인한현금유출액</th>
+                                                            
+                                                                <td class="r" title="10,194.05">10,194</td>
+                                                            
+                                                                <td class="r" title="1,066.17">1,066</td>
+                                                            
+                                                                <td class="r" title="59.26">59</td>
+                                                            
+                                                                <td class="r cle" title="3,130.87">3,131</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_12" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;기타투자활동으로인한현금흐름</span><a id="grid3_12" href="javascript:foldOpen('grid3_12');" class=" btn_acdopen"><span class="blind" id="span_grid3_12">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자수입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자지급(-)</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금수입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금지급(-)</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세납부(-)</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_12 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;중단영업관련현금흐름</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf rowBold">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="th_b">재무활동으로인한현금흐름</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="-94,845.10"><span class='tcr'>-94,845</span></td>
+                                                            
+                                                                <td class="r" title="-83,278.39"><span class='tcr'>-83,278</span></td>
+                                                            
+                                                                <td class="r" title="-239,910.33"><span class='tcr'>-239,910</span></td>
+                                                            
+                                                                <td class="r cle" title="-146,847.55"><span class='tcr'>-146,848</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_14" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;재무활동으로인한현금유입액</span><a id="grid3_14" href="javascript:foldOpen('grid3_14');" class=" btn_acdopen"><span class="blind" id="span_grid3_14">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="8,657.92">8,658</td>
+                                                            
+                                                                <td class="r" title="22,138.68">22,139</td>
+                                                            
+                                                                <td class="r" title="582.79">583</td>
+                                                            
+                                                                <td class="r cle" title="1,434.71">1,435</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사채의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;차입금의증가</th>
+                                                            
+                                                                <td class="r" title="8,657.92">8,658</td>
+                                                            
+                                                                <td class="r" title="22,056.81">22,057</td>
+                                                            
+                                                                <td class="r" title="582.79">583</td>
+                                                            
+                                                                <td class="r cle" title="1,434.71">1,435</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;미지급금의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유동성장기부채의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타금융부채의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타부채의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유상증자</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자기주식의처분</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;주식매입선택권의행사</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자본구성항목의증가</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="81.87">82</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_14 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타재무활동으로인한현금유입액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_15" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;(재무활동으로인한현금유출액)</span><a id="grid3_15" href="javascript:foldOpen('grid3_15');" class=" btn_acdopen"><span class="blind" id="span_grid3_15">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="7,111.00">7,111</td>
+                                                            
+                                                                <td class="r" title="8,649.47">8,649</td>
+                                                            
+                                                                <td class="r" title="35,389.62">35,390</td>
+                                                            
+                                                                <td class="r cle" title="74,689.22">74,689</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사채의감소</th>
+                                                            
+                                                                <td class="r" title="7,094.00">7,094</td>
+                                                            
+                                                                <td class="r" title="8,649.47">8,649</td>
+                                                            
+                                                                <td class="r" title="8,947.49">8,947</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;차입금의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="26,169.43">26,169</td>
+                                                            
+                                                                <td class="r cle" title="74,681.19">74,681</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;미지급금의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유동성장기부채의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타금융부채의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타부채의감소</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유상감자</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자기주식의취득</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자본구성항목의감소</th>
+                                                            
+                                                                <td class="r" title="17.00">17</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="272.70">273</td>
+                                                            
+                                                                <td class="r cle" title="8.03">8</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_15 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기타재무활동으로인한현금유출액</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr id="p_grid3_16" class="rwf acd_dep_start_close ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class=""><span class="txt_acd">&nbsp;&nbsp;&nbsp;기타재무활동으로인한현금흐름</span><a id="grid3_16" href="javascript:foldOpen('grid3_16');" class=" btn_acdopen"><span class="blind" id="span_grid3_16">계산에 참여한 계정 펼치기</span></a></div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="-96,392.02"><span class='tcr'>-96,392</span></td>
+                                                            
+                                                                <td class="r" title="-96,767.60"><span class='tcr'>-96,768</span></td>
+                                                            
+                                                                <td class="r" title="-205,103.50"><span class='tcr'>-205,104</span></td>
+                                                            
+                                                                <td class="r cle" title="-73,593.04"><span class='tcr'>-73,593</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자수입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이자지급(-)</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금수입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배당금지급(-)</th>
+                                                            
+                                                                <td class="r" title="-96,392.02"><span class='tcr'>-96,392</span></td>
+                                                            
+                                                                <td class="r" title="-96,767.60"><span class='tcr'>-96,768</span></td>
+                                                            
+                                                                <td class="r" title="-205,103.50"><span class='tcr'>-205,104</span></td>
+                                                            
+                                                                <td class="r cle" title="-73,593.04"><span class='tcr'>-73,593</span></td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세환입</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;법인세납부(-)</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr  class="c_grid3_16 rwf acd_dep2_sub" style="display:none;">
+                                                        
+                                                                <th scope="row" class="l clf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;중단영업관련현금흐름</th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">영업투자재무활동기타현금흐름</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="-1.39"><span class='tcr'>-1</span></td>
+                                                            
+                                                                <td class="r" title="1.39">1</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">연결범위변동으로인한현금의증가</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r" title="">&nbsp;</td>
+                                                            
+                                                                <td class="r cle" title="">&nbsp;</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">환율변동효과</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="5,952.60">5,953</td>
+                                                            
+                                                                <td class="r" title="-8,338.61"><span class='tcr'>-8,339</span></td>
+                                                            
+                                                                <td class="r" title="15,820.46">15,820</td>
+                                                            
+                                                                <td class="r cle" title="45,531.42">45,531</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf rowBold">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="th_b">현금및현금성자산의증가</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="-34,545.06"><span class='tcr'>-34,545</span></td>
+                                                            
+                                                                <td class="r" title="24,965.79">24,966</td>
+                                                            
+                                                                <td class="r" title="96,488.37">96,488</td>
+                                                            
+                                                                <td class="r cle" title="54,840.06">54,840</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">기초현금및현금성자산</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="303,405.05">303,405</td>
+                                                            
+                                                                <td class="r" title="268,859.99">268,860</td>
+                                                            
+                                                                <td class="r" title="293,825.78">293,826</td>
+                                                            
+                                                                <td class="r cle" title="390,314.15">390,314</td>
+                                                            
+                                                    </tr>
+                                        
+                                                    <tr class="rwf ">
+                                                        
+                                                                <th scope="row" class="l clf">
+                                                                  <div class="">기말현금및현금성자산</div>
+                                                                </th>
+                                                            
+                                                                <td class="r" title="268,859.99">268,860</td>
+                                                            
+                                                                <td class="r" title="293,825.78">293,826</td>
+                                                            
+                                                                <td class="r" title="390,314.15">390,314</td>
+                                                            
+                                                                <td class="r cle" title="445,154.21">445,154</td>
+                                                            
+                                                    </tr>
+                                        
+
+                                    </tbody>
+                                </table>
+"#;
