@@ -1,18 +1,10 @@
-use std::collections::{HashMap, HashSet};
-
-use polars::prelude::{LazyFrame, PolarsError};
-
 mod constants;
 mod test_mock;
 
 use {
-    self::constants::*,
-    polars::{
-        prelude::{DataFrame, NamedFrom, ParquetWriter},
-        series::Series,
-    },
+    polars::{prelude::*, series::Series},
     scraper::{ElementRef, Html, Selector},
-    std::num::ParseIntError,
+    std::{collections::HashMap, num::ParseIntError},
 };
 
 /// Get first non-empty text from nested DOM structure.
@@ -55,6 +47,7 @@ fn get_row_data(row_element: ElementRef) -> Result<Vec<u32>, ParseIntError> {
 fn get_statement_table(table_string: &str) -> Result<DataFrame, PolarsError> {
     let table = Html::parse_fragment(table_string);
     let row_selector = Selector::parse("tr").unwrap();
+    let years = Series::new("연도", ["2019", "2020", "2021"]);
     let result = table
         .select(&row_selector)
         // We don't need first row.
@@ -70,57 +63,10 @@ fn get_statement_table(table_string: &str) -> Result<DataFrame, PolarsError> {
         .collect::<HashMap<String, Vec<u32>>>()
         .into_iter()
         .map(|(k, v)| Series::new(&k, &v))
+        .chain([years])
         .collect::<Vec<_>>();
 
     DataFrame::new(result)
-}
-
-fn parse_statement_table(
-    table_string: &str,
-    years: &[&str],
-    columns: &[&str],
-    file_path: &str,
-) -> anyhow::Result<()> {
-    // should provide only 3 years
-    if years.len().ne(&3) {
-        return Err(anyhow::Error::msg("Only 3 years are acceptable."));
-    }
-    // extract table from given string
-    let span_selector = Selector::parse("span").unwrap();
-    match table_extract::Table::find_first(table_string) {
-        Some(table) => {
-            // iterate every row
-            let series_vec = table
-                .into_iter()
-                .zip(columns)
-                .map(|(row, col)| {
-                    // 3. iterate every row data, and save these as u32
-                    let parsed_row = row.into_iter().take(3).map(|val| -> u32 {
-                        match Html::parse_fragment(&val).select(&span_selector).next() {
-                            Some(neg_number) => {
-                                neg_number.inner_html().to_string().parse().unwrap_or(0)
-                            }
-                            _ => {
-                                if val.contains("&nbsp;") {
-                                    return 0;
-                                }
-                                val.parse().unwrap_or(0)
-                            }
-                        }
-                    });
-                    Series::new(col, parsed_row.collect::<Vec<_>>())
-                })
-                .collect::<Vec<_>>();
-            // create dataframe
-            let mut df = DataFrame::new(series_vec)?;
-            // save it as parquet
-            let mut file = std::fs::File::create(file_path)?;
-            ParquetWriter::new(&mut file).finish(&mut df)?;
-            // if successful, return Ok(())
-            Ok(())
-        }
-        _ => Err(anyhow::Error::msg("Invalid table string")),
-    }
 }
 
 pub async fn get_financial_statement(
@@ -143,28 +89,17 @@ pub async fn get_financial_statement(
         .select(&table_selector)
         .map(|selected| selected.html())
         .collect::<Vec<_>>();
-    let years = ["2019", "2020", "2021"];
-    // Table 1. Comprehensive income statement (annual)
-    parse_statement_table(
-        &tables[0],
-        &years,
-        &COMP_INCOME_STATEMENT_COLS,
-        &COMP_INCOME_STATEMENT_FILE_PATH,
-    )?;
-    // Table 3. Financial position statement (annual)
-    parse_statement_table(
-        &tables[2],
-        &years,
-        &FIN_POSITION_STATEMENT_COLS,
-        &FIN_POSITION_STATEMENT_FILE_PATH,
-    )?;
-    // Table 5. Cashflow statement (annual)
-    parse_statement_table(
-        &tables[4],
-        &years,
-        &CASHFLOW_STATEMENT_COLS,
-        &CASHFLOW_STATEMENT_FILE_PATH,
-    )?;
+    let comp_income = get_statement_table(&tables[0])?;
+    let fin_position = get_statement_table(&tables[2])?;
+    let cashflow = get_statement_table(&tables[4])?;
+
+    let mut financial_statement = comp_income
+        .inner_join(&fin_position, ["연도"], ["연도"])?
+        .inner_join(&cashflow, ["연도"], ["연도"])?;
+
+    let mut file =
+        std::fs::File::create(format!("assets/financial_statements/{ticker}_FS.parquet"))?;
+    ParquetWriter::new(&mut file).finish(&mut financial_statement)?;
 
     Ok(())
 }
@@ -176,30 +111,44 @@ mod test {
         insta::assert_snapshot,
     };
 
-    // #[tokio::test]
-    // async fn has_tables() {
-    //     // Arrange
-    //     let client = reqwest::Client::new();
-    //     let samsung_ticker = "005930";
-    //     // Act
-    //     let result = get_financial_statement(&client, samsung_ticker)
-    //         .await
-    //         .unwrap();
-    //     // Assert
-    //     // assert_eq!(result.len(), 6);
-    //     // assert_snapshot!(result[0], @"")
-    // }
-
-    // #[test]
-    // fn parsed_statement_table_should_have_only_3_years_data() {
-    //     // Arrange
-    //     let table_string = TABLE_STRING;
-    //     let file_path = "examples/statement_table.parquet";
-    //     // Act
-    //     // let result = parse_statement_table(table_string, file_path).unwrap();
-    //     // Assert
-    //     // assert_eq!(result.len(), 3);
-    // }
+    #[tokio::test]
+    async fn has_tables() {
+        // Arrange
+        let client = reqwest::Client::new();
+        let samsung_ticker = "005930";
+        // Act
+        get_financial_statement(&client, samsung_ticker)
+            .await
+            .unwrap();
+        // Assert
+        let samsung_fs = LazyFrame::scan_parquet(
+            "assets/financial_statements/005930_FS.parquet",
+            Default::default(),
+        );
+        assert!(samsung_fs.is_ok());
+        assert_snapshot!(
+            samsung_fs
+            .unwrap()
+            .filter(col("자본금").lt(lit(20000)))
+            .select(&[col("매출액"),col("매출원가"),col("매출총이익"),col("판매비와관리비"),col("인건비"),col("유무형자산상각비")])
+            .collect()
+            .unwrap()
+            .to_string(), 
+            @r###"
+        shape: (3, 6)
+        ┌─────────┬────────────┬────────────┬────────────────┬─────────┬──────────────────┐
+        │ 매출액  ┆ 매출원가   ┆ 매출총이익 ┆ 판매비와관리비 ┆ 인건비  ┆ 유무형자산상각비 │
+        │ ---     ┆ ---        ┆ ---        ┆ ---            ┆ ---     ┆ ---              │
+        │ u32     ┆ u32        ┆ u32        ┆ u32            ┆ u32     ┆ u32              │
+        ╞═════════╪════════════╪════════════╪════════════════╪═════════╪══════════════════╡
+        │ 2304009 ┆ 1472395    ┆ 831613     ┆ 553928         ┆ 64226   ┆ 20408            │
+        ├╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ 2368070 ┆ 1444883    ┆ 923187     ┆ 563248         ┆ 70429   ┆ 20857            │
+        ├╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+        │ 2796048 ┆ 1664113    ┆ 1131935    ┆ 615596         ┆ 75568   ┆ 20731            │
+        └─────────┴────────────┴────────────┴────────────────┴─────────┴──────────────────┘
+        "###)
+    }
 
     #[test]
     fn extract_cashflow_statement_data() {
@@ -208,7 +157,7 @@ mod test {
         // Act
         let result = get_statement_table(input).unwrap();
         // Assert
-        assert_snapshot!(result.get_column_names().join(", "), @"지분법관련이익, (현금유입이없는수익등차감), 반품(환불)부채전입액, 당기손익-공정가치측정 금융자산관련손실, 금융자산손상차손, 부채의증가(감소), 배출부채환입액, 배당금수입, 기타투자활동으로인한현금유출액, 사채의감소, 주식보상비환입, 미지급금의증가, 차입금의증가, 사채상환손실, 장기금융상품의감소, 현금유출이없는비용등가산, 재무활동으로인한현금흐름, 기타금융부채의감소, 생물자산의증가, 금융자산평가손실, 주식보상비, 기타투자활동으로인한현금흐름, 주식매입선택권의행사, 기타비유동금융자산의감소, 자산의감소(증가), 환율변동효과, 투자활동으로인한현금유입액, 금융원가, 자본구성항목의증가, 대손상각비, 투자자산평가손실, 배당금지급(-), 기타비유동금융자산의증가, 매출채권처분이익, 유동금융자산의감소, 금융수익, 금융자산평가이익, 법인세비용차감전계속사업이익, 무형자산의감소, 자산손상차손환입, 유상감자, 기타투자활동으로인한현금유입액, 유형자산의증가, 배당금수익, 관계기업관련손익, 현금및현금성자산의증가, 기초현금및현금성자산, 투자자산평가이익, 유동성장기부채의감소, 종업원급여, 중단영업관련현금흐름, 재고자산감모손실, 기타비용, 재고자산감모손실환입, 무형자산상각비, 매도가능금융자산의증가, (재무활동으로인한현금유출액), 만기보유금융자산의증가, 법인세환입, 지분법관련손실, 기타부채의감소, 외환이익, 자본구성항목의감소, 투자부동산의증가, 투자활동으로인한현금흐름, 충당부채전입액, 만기보유금융자산의감소, 재고자산폐기(처분)이익, 법인세수익, 영업투자재무활동기타현금흐름, 관계기업등지분관련투자자산의감소, 장기대여금의증가, 기타부채의증가, 배출부채전입액, *영업에서창출된현금흐름, 외환손실, 자산재평가이익, 기타운전자본의변동, 금융자산처분손실, 장기금융상품의증가, 반품(환불)부채환입액, 종속회사관련이익, 배당금지급, 미지급금의감소, 파생상품이익, 사채의증가, 기타금융부채의증가, 무형자산의증가, 영업활동으로인한현금흐름, 법인세비용, 자산손상차손, 퇴직급여충당부채환입액, 이자수입, 유동성장기부채의증가, 자산처분(폐기)이익, 기타재무활동으로인한현금흐름, 기타재무활동으로인한현금유출액, 대손충당금환입액, 이자비용, 매출채권처분손실, 이자수익, 기타수익, 관계기업등지분관련투자자산의증가, 유형자산의감소, 감가상각비, 자기주식의취득, 계약부채전입액, 퇴직급여, 사채상환이익, 재고자산폐기(처분)손실, 차입금의감소, 연결범위변동으로인한현금의증가, 법인세납부(-), 매도가능금융자산의감소, 기타의대손상각비, (투자활동으로인한현금유출액), 장기대여금의감소, 투자부동산의감소, 자산처분(폐기)손실, 자기주식의처분, 금융부채관련손실, 파생상품손실, 종속기업관련손실, 당기손익-공정가치측정 금융자산관련이익, 금융자산처분이익, 충당부채환입액, 이자지급(-), 유상증자, 유동금융자산의증가, 금융부채관련이익, 기타재무활동으로인한현금유입액, 자산재평가손실, 계약부채환입액, 생물자산의감소, 영업활동으로인한자산부채변동(운전자본변동), 기말현금및현금성자산, 당기순손익, 정부보조금등의변동, 파생상품의변동, 재무활동으로인한현금유입액, 기타영업활동으로인한현금흐름, 금융자산손상차손환입");
+        assert_snapshot!(result.get_column_names().join(", "), @"금융부채관련손실, 지분법관련손실, 금융자산처분손실, 투자자산평가이익, 무형자산상각비, 장기대여금의증가, 주식매입선택권의행사, 영업활동으로인한자산부채변동(운전자본변동), 차입금의증가, 감가상각비, 매출채권처분이익, 기타부채의감소, 만기보유금융자산의감소, 기타금융부채의증가, 당기순손익, 장기대여금의감소, 자기주식의취득, 투자부동산의증가, 기타재무활동으로인한현금유출액, 재고자산감모손실환입, (현금유입이없는수익등차감), 사채의감소, 기타재무활동으로인한현금흐름, 기타영업활동으로인한현금흐름, 반품(환불)부채전입액, 금융자산평가이익, 기타투자활동으로인한현금흐름, 사채의증가, 당기손익-공정가치측정 금융자산관련손실, 자산처분(폐기)이익, 배당금수입, 자산손상차손환입, 자기주식의처분, 차입금의감소, 배당금지급, 자산처분(폐기)손실, 중단영업관련현금흐름, 유동금융자산의감소, 파생상품의변동, 생물자산의감소, 자산재평가이익, 영업투자재무활동기타현금흐름, 자본구성항목의증가, 매출채권처분손실, 사채상환이익, 무형자산의증가, 정부보조금등의변동, 이자수입, 법인세환입, 매도가능금융자산의감소, 기타비유동금융자산의감소, *영업에서창출된현금흐름, 기타투자활동으로인한현금유입액, 재고자산폐기(처분)손실, 장기금융상품의증가, 퇴직급여, 유형자산의감소, 영업활동으로인한현금흐름, 배출부채전입액, 배출부채환입액, 재고자산폐기(처분)이익, 계약부채전입액, 유동성장기부채의감소, 금융부채관련이익, 당기손익-공정가치측정 금융자산관련이익, 법인세수익, 기타운전자본의변동, 이자지급(-), 금융자산평가손실, 파생상품손실, 기타비용, 투자활동으로인한현금흐름, 매도가능금융자산의증가, 현금및현금성자산의증가, 배당금지급(-), 외환이익, 무형자산의감소, 종속기업관련손실, 투자부동산의감소, (투자활동으로인한현금유출액), 기타금융부채의감소, 자본구성항목의감소, 미지급금의증가, 투자자산평가손실, 지분법관련이익, 금융수익, 법인세납부(-), 환율변동효과, 자산재평가손실, 대손충당금환입액, 금융자산손상차손환입, 기말현금및현금성자산, 기타투자활동으로인한현금유출액, 미지급금의감소, 법인세비용차감전계속사업이익, 이자수익, 만기보유금융자산의증가, 충당부채전입액, 자산손상차손, 금융자산손상차손, 자산의감소(증가), 투자활동으로인한현금유입액, 반품(환불)부채환입액, 유상증자, 금융원가, 재고자산감모손실, 기타의대손상각비, 계약부채환입액, 사채상환손실, 배당금수익, 주식보상비환입, 유형자산의증가, 관계기업관련손익, 관계기업등지분관련투자자산의증가, 유동성장기부채의증가, 종업원급여, 충당부채환입액, 관계기업등지분관련투자자산의감소, 이자비용, 부채의증가(감소), 유상감자, 재무활동으로인한현금유입액, 법인세비용, 기초현금및현금성자산, 기타재무활동으로인한현금유입액, 생물자산의증가, 주식보상비, 종속회사관련이익, 장기금융상품의감소, 대손상각비, 기타비유동금융자산의증가, 기타부채의증가, 금융자산처분이익, (재무활동으로인한현금유출액), 연결범위변동으로인한현금의증가, 재무활동으로인한현금흐름, 파생상품이익, 기타수익, 외환손실, 유동금융자산의증가, 현금유출이없는비용등가산, 퇴직급여충당부채환입액, 연도");
     }
 
     #[test]
@@ -218,7 +167,7 @@ mod test {
         // Act
         let result = get_statement_table(input).unwrap();
         // Assert
-        assert_snapshot!(result.get_column_names().join(", "), @"재고자산폐기(처분)손실, 충당부채전입액, 영업이익(발표기준), 중단영업이익, 지배주주순이익, 기타원가성비용, 이자수익, 대손상각비, 인건비, 기타, 파생상품손실, 대손충당금환입, 금융자산처분손실, 재고자산감모손실, 자산처분(폐기)손실, 계속영업이익, 금융자산손상차손, 수수료수익, 영업이익, 종속기업,공동지배기업및관계기업투자주식처분손익, 법인세비용, 매출원가, 당기손익-공정가치측정 금융자산관련손실, 기타대손상각비, 재고자산감모손실환입, 기타비용, 외환손실, 로열티수익, 비지배주주순이익, 자산평가손실, 대손충당금환입액, 임대료수익, 세전계속사업이익, 매출액, 매출채권처분이익, 판매비와관리비, 매출채권처분손실, 기타금융수익, 광고선전비, 금융자산평가손실, 기타금융원가, 충당부채환입액, 지분법손익, 배당금수익, 연구개발비, 금융자산처분이익, 금융자산손상차손환입, 종속기업,공동지배기업및관계기업투자주식손상관련손익, 당기손익-공정가치측정 금융자산관련이익, 자산처분(폐기)이익, 이자비용, 금융수익, 금융원가, 기타수익, 재고자산폐기(처분)이익, 당기손익-공정가치측정 금융자산평가손실, 매출총이익, 파생상품이익, 판매비, 당기순이익, 종속기업,공동지배기업및관계기업관련손익, 관리비, 외환이익, 유무형자산상각비, 금융자산평가이익, 당기손익-공정가치측정 금융자산평가이익, 자산손상차손, 자산평가이익, 자산손상차손환입");
+        assert_snapshot!(result.get_column_names().join(", "), @"자산평가손실, 연구개발비, 금융수익, 판매비와관리비, 법인세비용, 수수료수익, 비지배주주순이익, 이자비용, 파생상품손실, 대손상각비, 금융자산손상차손환입, 영업이익, 자산손상차손환입, 금융원가, 재고자산감모손실환입, 매출채권처분이익, 배당금수익, 기타수익, 지분법손익, 충당부채환입액, 기타원가성비용, 영업이익(발표기준), 대손충당금환입액, 지배주주순이익, 외환이익, 금융자산처분이익, 외환손실, 재고자산폐기(처분)이익, 기타금융원가, 충당부채전입액, 중단영업이익, 세전계속사업이익, 매출총이익, 판매비, 재고자산폐기(처분)손실, 인건비, 종속기업,공동지배기업및관계기업투자주식처분손익, 당기순이익, 기타금융수익, 계속영업이익, 기타, 기타비용, 광고선전비, 종속기업,공동지배기업및관계기업투자주식손상관련손익, 유무형자산상각비, 자산평가이익, 금융자산평가이익, 자산처분(폐기)이익, 당기손익-공정가치측정 금융자산관련손실, 당기손익-공정가치측정 금융자산관련이익, 임대료수익, 기타대손상각비, 금융자산평가손실, 매출채권처분손실, 금융자산손상차손, 매출원가, 이자수익, 당기손익-공정가치측정 금융자산평가손실, 대손충당금환입, 자산손상차손, 파생상품이익, 관리비, 금융자산처분손실, 자산처분(폐기)손실, 매출액, 종속기업,공동지배기업및관계기업관련손익, 로열티수익, 재고자산감모손실, 당기손익-공정가치측정 금융자산평가이익, 연도");
     }
 
     #[test]
@@ -228,7 +177,7 @@ mod test {
         // Act
         let result = get_statement_table(input).unwrap();
         // Assert
-        assert_snapshot!(result.get_column_names().join(", "), @"관계기업등지분관련투자자산, 기타비유동자산, 자산, 기타유동자산, 배출부채, 매입채무및기타유동채무, 배출권, 장기당기법인세자산, 유동자산, 사채, 기타금융업부채, 자본잉여금, 이연법인세자산, 현금및현금성자산, 반품(환불)부채, 유동성장기부채, 비유동부채, 투자부동산, 매출채권및기타유동채권, 비지배주주지분, 유동부채, 이연법인세부채, 이익잉여금(결손금), 자본금, 자본, 무형자산, 단기차입금, 계약부채, 유동종업원급여충당부채, 비유동금융부채, 기타유동부채, 장기매입채무및기타비유동채무, 당기법인세부채, 지배기업주주지분, 기타장기충당부채, 단기사채, 비유동자산, 반품(환불)자산, 장기당기법인세부채, 기타자본, 장기차입금, 유동생물자산, 부채, 유동금융부채, 당기법인세자산, 유동금융자산, 기타단기충당부채, 비유동종업원급여충당부채, 신종자본증권, 매각예정으로분류된처분자산집단에포함된부채, 계약자산, 비유동생물자산, 장기금융자산, 기타포괄손익누계액, 기타비유동부채, 재고자산, 장기매출채권및기타비유동채권, 기타금융업자산, 매각예정비유동자산및처분자산집단, 유형자산");
+        assert_snapshot!(result.get_column_names().join(", "), @"반품(환불)부채, 매입채무및기타유동채무, 반품(환불)자산, 자본금, 현금및현금성자산, 사채, 비유동자산, 신종자본증권, 투자부동산, 유형자산, 비유동종업원급여충당부채, 이익잉여금(결손금), 계약자산, 관계기업등지분관련투자자산, 기타비유동자산, 단기차입금, 당기법인세부채, 매각예정으로분류된처분자산집단에포함된부채, 기타비유동부채, 기타장기충당부채, 지배기업주주지분, 장기매출채권및기타비유동채권, 기타유동자산, 매출채권및기타유동채권, 비유동금융부채, 배출부채, 이연법인세자산, 자본, 기타자본, 유동생물자산, 비유동생물자산, 유동성장기부채, 계약부채, 기타포괄손익누계액, 기타금융업자산, 기타단기충당부채, 비유동부채, 기타금융업부채, 부채, 단기사채, 무형자산, 장기당기법인세부채, 자본잉여금, 비지배주주지분, 이연법인세부채, 자산, 장기당기법인세자산, 당기법인세자산, 장기금융자산, 배출권, 유동금융부채, 유동금융자산, 장기매입채무및기타비유동채무, 유동종업원급여충당부채, 재고자산, 기타유동부채, 매각예정비유동자산및처분자산집단, 유동부채, 장기차입금, 유동자산, 연도");
     }
 
     #[test]
