@@ -47,6 +47,7 @@ fn get_row_data(row_element: ElementRef) -> Result<Vec<u32>, ParseIntError> {
         .select(&head_selector)
         .take(3)
         .map(get_first_text)
+        // Numbers are separated with comma. Remove them to parse it to u32.
         .map(|k| k.unwrap_or("0".to_string()).replace(",", "").parse())
         .collect()
 }
@@ -56,6 +57,7 @@ fn get_statement_table(table_string: &str) -> Result<DataFrame, PolarsError> {
     let row_selector = Selector::parse("tr").unwrap();
     let result = table
         .select(&row_selector)
+        // We don't need first row.
         .skip(1)
         .enumerate()
         .map(|(i, row)| {
@@ -64,6 +66,7 @@ fn get_statement_table(table_string: &str) -> Result<DataFrame, PolarsError> {
 
             (header, data)
         })
+        // Since we want to dedup data with same column name, use HashMap.
         .collect::<HashMap<String, Vec<u32>>>()
         .into_iter()
         .map(|(k, v)| Series::new(&k, &v))
