@@ -292,8 +292,22 @@ mod test {
         let ticker = "005930";
         let client = reqwest::Client::new();
 
-        let result = get_latest_stock_price(&client, ticker).await.unwrap();
+        let result = get_latest_stock_price_and_share(&client, ticker)
+            .await
+            .unwrap();
 
-        assert_snapshot!(result.to_string(), @"63800");
+        assert_snapshot!(result.0.to_string(), @"63800");
+    }
+
+    #[tokio::test]
+    async fn get_latest_samsung_stock_share() {
+        let ticker = "005930";
+        let client = reqwest::Client::new();
+
+        let result = get_latest_stock_price_and_share(&client, ticker)
+            .await
+            .unwrap();
+
+        assert_snapshot!(result.1.to_string(), @"63800");
     }
 }
