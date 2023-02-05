@@ -259,4 +259,13 @@ mod test {
             assert_snapshot!(result, @"hello")
         }
     }
+
+    #[tokio::test]
+    async fn get_latest_samsung_stock_price() {
+        let ticker = "005930";
+
+        let result = get_latest_stock_price(ticker).unwrap();
+
+        assert_snapshot!(result, @"");
+    }
 }
