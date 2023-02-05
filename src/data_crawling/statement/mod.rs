@@ -161,7 +161,7 @@ mod test {
     };
 
     #[tokio::test]
-    async fn has_tables() {
+    async fn samsung_financial_statement() {
         // Arrange
         let client = reqwest::Client::new();
         let samsung_ticker = "005930";
@@ -293,7 +293,7 @@ mod test {
     }
 
     #[test]
-    fn should_extract_first_string() {
+    fn extract_hello_as_first_text() {
         let th_string = r#"
 				<table>
 					<th scope="col" class="clf tbold">
@@ -310,7 +310,7 @@ mod test {
     }
 
     #[tokio::test]
-    async fn get_latest_samsung_stock_price() {
+    async fn latest_samsung_stock_price() {
         let ticker = "005930";
         let client = reqwest::Client::new();
 
@@ -322,7 +322,7 @@ mod test {
     }
 
     #[tokio::test]
-    async fn get_latest_samsung_stock_share() {
+    async fn latest_samsung_stock_share() {
         let ticker = "005930";
         let client = reqwest::Client::new();
 
@@ -331,5 +331,23 @@ mod test {
             .unwrap();
 
         assert_snapshot!(result.1.to_string(), @"5969782550");
+    }
+
+    #[tokio::test]
+    async fn latest_metrics_for_samsung() {
+        let ticker = "005930";
+        let client = reqwest::Client::new();
+
+        let result: Metrics = get_latest_computed_metrics(&client, ticker).await.unwrap();
+
+        assert_eq!(
+            result,
+            Metrics {
+                per: 0,
+                pbr: 0,
+                pcr: 0,
+                psr: 0
+            }
+        )
     }
 }
