@@ -15,7 +15,7 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
   - [x] Calculate value metrics (PER, PBR, PCR, PSR).
   - [ ] Do this for every issues.
 - [ ] Get various data from _DART_.
-  - [ ] Use provided API to get data.
+  - [X] Use provided API key to get data.
   - [ ] Design the the data pipeline for these data.
   - [ ] Get disclosure info.
   - [ ] Get business report.
