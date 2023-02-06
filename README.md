@@ -10,9 +10,10 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
 - [x] Get the latest biz day from _Naver Finance_.
 - [x] Get WICS sector info from _WiseIndex_.
 - [x] Get daily stock price for individual issue, from _Naver Finance_.
-- [ ] Get financial statements from _FN Guide_.
+- [X] Get financial statements from _FN Guide_.
   - [x] Save annual data of each ticker into parquet file.
-  - [ ] Calculate value metrics (PER, PBR, PCR, etc...).
+  - [x] Calculate value metrics (PER, PBR, PCR, PSR).
+  - [ ] Do this for every issues.
 - [ ] Get various data from _DART_.
   - [ ] Use provided API to get data.
   - [ ] Design the the data pipeline for these data.
