@@ -1,3 +1,22 @@
+use {
+    quick_xml::de::from_str as xml_from_str,
+    serde::{Deserialize, Serialize},
+};
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename = "result")]
+struct CorpCodeResult {
+    list: Vec<CorpCodeItem>,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+struct CorpCodeItem {
+    corp_code: String,
+    corp_name: String,
+    stock_code: String,
+    modify_date: String,
+}
+
 async fn save_corp_codes_xml(
     query_client: &reqwest::Client,
     api_key: &str,
@@ -24,9 +43,19 @@ async fn save_corp_codes_xml(
         .map_err(|_| anyhow::Error::msg("Cannot extract corp code zip file"))
 }
 
+fn extract_corp_codes(input_path: &str) -> anyhow::Result<Vec<CorpCodeItem>> {
+    let xml_string = std::fs::read_to_string(input_path)?;
+    let result: Vec<CorpCodeItem> = xml_from_str::<CorpCodeResult>(&xml_string)?
+        .list
+        .into_iter()
+        .collect();
+
+    Ok(result)
+}
+
 #[cfg(test)]
 mod test {
-    use {super::*, insta::assert_snapshot};
+    use super::*;
 
     #[tokio::test]
     async fn should_have_valid_corp_code_xml_file() {
@@ -43,21 +72,46 @@ mod test {
         assert!(result.is_ok());
     }
 
-    // <list>
-    //     <corp_code>00430964</corp_code>
-    //     <corp_name>굿앤엘에스</corp_name>
-    //     <stock_code> </stock_code>
-    //     <modify_date>20170630</modify_date>
-    // </list>
-
     #[test]
     fn extracted_corp_codes() {
-        assert!(
-            result.take(5),
-            vec![CorpCode {
-                corp_code: "",
-                corp_name: ""
-            }]
+        let input_path = "examples/corp_codes/CORPCODE.xml";
+
+        let result: Vec<CorpCodeItem> = extract_corp_codes(input_path).unwrap();
+
+        assert_eq!(
+            result[0..5],
+            vec![
+                CorpCodeItem {
+                    corp_code: "00434003".to_string(),
+                    corp_name: "다코".to_string(),
+                    stock_code: "".to_string(),
+                    modify_date: "20170630".to_string()
+                },
+                CorpCodeItem {
+                    corp_code: "00434456".to_string(),
+                    corp_name: "일산약품".to_string(),
+                    stock_code: "".to_string(),
+                    modify_date: "20170630".to_string()
+                },
+                CorpCodeItem {
+                    corp_code: "00430964".to_string(),
+                    corp_name: "굿앤엘에스".to_string(),
+                    stock_code: "".to_string(),
+                    modify_date: "20170630".to_string()
+                },
+                CorpCodeItem {
+                    corp_code: "00432403".to_string(),
+                    corp_name: "한라판지".to_string(),
+                    stock_code: "".to_string(),
+                    modify_date: "20170630".to_string()
+                },
+                CorpCodeItem {
+                    corp_code: "00388953".to_string(),
+                    corp_name: "크레디피아제이십오차유동화전문회사".to_string(),
+                    stock_code: "".to_string(),
+                    modify_date: "20170630".to_string()
+                }
+            ]
         )
     }
 }
