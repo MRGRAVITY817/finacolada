@@ -1,4 +1,4 @@
-async fn get_corp_codes(
+async fn save_corp_codes_xml(
     query_client: &reqwest::Client,
     api_key: &str,
     output_path: Option<&str>,
@@ -29,17 +29,35 @@ mod test {
     use {super::*, insta::assert_snapshot};
 
     #[tokio::test]
-    async fn should_have_valid_corp_code_zip_file() {
+    async fn should_have_valid_corp_code_xml_file() {
         let client = reqwest::Client::new();
         let api_key = std::env::var("OPENDART_API_KEY").unwrap();
         let output_path = "examples/corp_codes.zip";
         let result_path = "examples/corp_codes/CORPCODE.xml";
 
-        get_corp_codes(&client, &api_key, Some(output_path))
+        save_corp_codes_xml(&client, &api_key, Some(output_path))
             .await
             .unwrap();
 
         let result = std::fs::read(result_path);
         assert!(result.is_ok());
+    }
+
+    // <list>
+    //     <corp_code>00430964</corp_code>
+    //     <corp_name>굿앤엘에스</corp_name>
+    //     <stock_code> </stock_code>
+    //     <modify_date>20170630</modify_date>
+    // </list>
+
+    #[test]
+    fn extracted_corp_codes() {
+        assert!(
+            result.take(5),
+            vec![CorpCode {
+                corp_code: "",
+                corp_name: ""
+            }]
+        )
     }
 }
