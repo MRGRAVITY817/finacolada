@@ -14,6 +14,7 @@ anyhow = "1"
 calamine = "0.19"
 chrono = "0.4"
 polars = { version = "0.26", features = ["parquet", "lazy", "strings"] }
+quick-xml = "0.27.1"
 regex = "1"
 reqwest = { version = "0.11", features = ["json"] }
 ron = "0.8.0"
@@ -22,6 +23,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 table-extract = "0.2.2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+zip = "0.6.4"
 
 [dev-dependencies]
 insta = { version = "1", features = ["yaml"] }

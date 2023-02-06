@@ -1,4 +1,4 @@
-pub async fn get_corp_codes(
+async fn get_corp_codes(
     query_client: &reqwest::Client,
     api_key: &str,
     output_path: Option<&str>,
@@ -12,27 +12,34 @@ pub async fn get_corp_codes(
         .bytes()
         .await?;
 
-    match output_path {
-        Some(path) => std::fs::write(path, &result),
-        None => std::fs::write("assets/corp_codes/corp_code.zip", &result),
-    }
-    .map_err(|_| anyhow::Error::msg("Cannot save the corporate codes"))
+    let output_path = output_path.unwrap_or("assets/corp_codes.zip");
+    std::fs::write(output_path, &result)?;
+
+    let fname = std::path::Path::new(output_path);
+    let file = std::fs::File::open(fname)?;
+
+    let mut archive = zip::ZipArchive::new(file)?;
+    archive
+        .extract(output_path.replace(".zip", ""))
+        .map_err(|_| anyhow::Error::msg("Cannot extract corp code zip file"))
 }
 
 #[cfg(test)]
 mod test {
-    use super::*;
+    use {super::*, insta::assert_snapshot};
 
     #[tokio::test]
     async fn should_have_valid_corp_code_zip_file() {
         let client = reqwest::Client::new();
         let api_key = std::env::var("OPENDART_API_KEY").unwrap();
         let output_path = "examples/corp_codes.zip";
+        let result_path = "examples/corp_codes/CORPCODE.xml";
 
         get_corp_codes(&client, &api_key, Some(output_path))
             .await
             .unwrap();
 
-        assert!(std::fs::read(output_path).is_ok())
+        let result = std::fs::read(result_path);
+        assert!(result.is_ok());
     }
 }
