@@ -1,6 +1,0 @@
----
-source: src/data_crawling/wics.rs
-expression: "format!(\"{:?}\", result.iter().next())"
----
-"Some(WicsRow { idx_cd: \"G25\", idx_nm_kor: \"WICS 경기관련소비재\", all_mkt_val: 127513928, cmp_cd: \"005380\", cmp_kor: \"현대차\", mkt_val: 24664573, wgt: 19.34, s_wgt: 19.34, cal_wgt: 1.0, sec_cd: \"G25\", sec_nm_kor: \"경기관련소비재\", seq: 1, top60: 9, apt_shr_cnt: 141021003 })"
-

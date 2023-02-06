@@ -1,6 +1,0 @@
----
-source: src/data_crawling/krx.rs
-expression: test_xlsx_with_first_row(output_path).unwrap()
----
-060310 3S KOSDAQ
-

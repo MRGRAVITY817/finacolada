@@ -1,6 +1,0 @@
----
-source: src/data_crawling/krx.rs
-expression: test_xlsx_individual(output_path).unwrap()
----
-095570 -10 1707
-

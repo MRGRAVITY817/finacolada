@@ -4,3 +4,4 @@
 /assets
 /profile
 .env*
+**/snapshots
