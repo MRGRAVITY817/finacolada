@@ -1,6 +1,11 @@
 use {
+    polars::{
+        df,
+        prelude::{NamedFrom, ParquetWriter},
+    },
     quick_xml::de::from_str as xml_from_str,
     serde::{Deserialize, Serialize},
+    zip::ZipArchive,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -15,6 +20,19 @@ struct CorpCodeItem {
     corp_name: String,
     stock_code: String,
     modify_date: String,
+}
+
+fn save_corp_code_list(output_path: &str, corp_code_list: &[CorpCodeItem]) -> anyhow::Result<()> {
+    let mut df = df![
+        "corp_code" => corp_code_list.into_iter().map(|item| item.corp_code.clone()).collect::<Vec<String>>(),
+        "corp_name" => corp_code_list.into_iter().map(|item| item.corp_name.clone()).collect::<Vec<String>>(),
+        "stock_code" => corp_code_list.into_iter().map(|item| item.stock_code.clone()).collect::<Vec<String>>(),
+        "modify_date" => corp_code_list.into_iter().map(|item| item.modify_date.clone()).collect::<Vec<String>>(),
+    ]?;
+    let mut file = std::fs::File::create(output_path)?;
+    ParquetWriter::new(&mut file).finish(&mut df)?;
+
+    Ok(())
 }
 
 async fn save_corp_codes_xml(
@@ -37,7 +55,7 @@ async fn save_corp_codes_xml(
     let fname = std::path::Path::new(output_path);
     let file = std::fs::File::open(fname)?;
 
-    let mut archive = zip::ZipArchive::new(file)?;
+    let mut archive = ZipArchive::new(file)?;
     archive
         .extract(output_path.replace(".zip", ""))
         .map_err(|_| anyhow::Error::msg("Cannot extract corp code zip file"))
