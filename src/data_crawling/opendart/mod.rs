@@ -55,6 +55,8 @@ fn extract_corp_codes(input_path: &str) -> anyhow::Result<Vec<CorpCodeItem>> {
 
 #[cfg(test)]
 mod test {
+    use polars::prelude::LazyFrame;
+
     use super::*;
 
     #[tokio::test]
@@ -113,5 +115,46 @@ mod test {
                 }
             ]
         )
+    }
+
+    #[test]
+    fn read_saved_corp_code_list() {
+        let output_path = "examples/corp_code_list.parquet";
+        let corp_code_list = vec![
+            CorpCodeItem {
+                corp_code: "00434003".to_string(),
+                corp_name: "다코".to_string(),
+                stock_code: "".to_string(),
+                modify_date: "20170630".to_string(),
+            },
+            CorpCodeItem {
+                corp_code: "00434456".to_string(),
+                corp_name: "일산약품".to_string(),
+                stock_code: "".to_string(),
+                modify_date: "20170630".to_string(),
+            },
+            CorpCodeItem {
+                corp_code: "00430964".to_string(),
+                corp_name: "굿앤엘에스".to_string(),
+                stock_code: "".to_string(),
+                modify_date: "20170630".to_string(),
+            },
+            CorpCodeItem {
+                corp_code: "00432403".to_string(),
+                corp_name: "한라판지".to_string(),
+                stock_code: "".to_string(),
+                modify_date: "20170630".to_string(),
+            },
+            CorpCodeItem {
+                corp_code: "00388953".to_string(),
+                corp_name: "크레디피아제이십오차유동화전문회사".to_string(),
+                stock_code: "".to_string(),
+                modify_date: "20170630".to_string(),
+            },
+        ];
+
+        save_corp_code_list(output_path, &corp_code_list).unwrap();
+
+        assert!(LazyFrame::scan_parquet(output_path, Default::default()).is_ok())
     }
 }
