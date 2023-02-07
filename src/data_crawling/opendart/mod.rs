@@ -73,9 +73,8 @@ fn extract_corp_codes(input_path: &str) -> anyhow::Result<Vec<CorpCodeItem>> {
 
 #[cfg(test)]
 mod test {
-    use polars::prelude::LazyFrame;
-
     use super::*;
+    use polars::prelude::*;
 
     #[tokio::test]
     async fn should_have_valid_corp_code_xml_file() {
@@ -173,6 +172,12 @@ mod test {
 
         save_corp_code_list(output_path, &corp_code_list).unwrap();
 
-        assert!(LazyFrame::scan_parquet(output_path, Default::default()).is_ok())
+        let result = LazyFrame::scan_parquet(output_path, Default::default());
+        assert!(result.is_ok());
+        assert!(result
+            .unwrap()
+            .select(&[col("corp_code"), col("corp_name")])
+            .fetch(5)
+            .is_ok())
     }
 }
