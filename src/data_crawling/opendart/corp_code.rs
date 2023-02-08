@@ -43,7 +43,7 @@ async fn save_corp_codes_xml(
     let result = query_client
         .get("https://opendart.fss.or.kr/api/corpCode.xml")
         .query(&[("crtfc_key", api_key)])
-				.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36")
+        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36")
         .send()
         .await?
         .bytes()
