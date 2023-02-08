@@ -16,9 +16,9 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
   - [ ] Do this for every issues.
 - [ ] Get various data from _DART_.
   - [X] Use provided API key to get data.
-  - [ ] Design the the data pipeline for these data.
   - [ ] Get disclosure info.
   - [ ] Get business report.
+  - [ ] Design the the data pipeline for these data.
 - [x] Combine individual & sector info from _KRX_.
   - [x] Get OTP for KOSPI & KOSDAQ.
   - [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
