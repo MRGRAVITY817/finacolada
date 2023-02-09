@@ -15,16 +15,16 @@ Hope we all have a nice glass of pinacolada in sunny beach 🍹
   - [x] Calculate value metrics (PER, PBR, PCR, PSR).
   - [ ] Do this for every issues.
 - [ ] Get various data from _DART_.
-  - [X] Use provided API key to get data.
-  - [ ] Get disclosure info.
-  - [ ] Get business report.
-  - [ ] Design the the data pipeline for these data.
+  - [x] Use provided API key to get data.
+  - [x] Get disclosure info.
+  - [x] Get business report.
 - [x] Combine individual & sector info from _KRX_.
   - [x] Get OTP for KOSPI & KOSDAQ.
   - [x] KRX_SEC: Industrial classification status by sector, KOSPI & KOSDAQ (KRX_SEC)
   - [x] KRX_IND PER/PBR/Dividend for individual issue.
   - [x] Merge KRX_SEC and KRX_IND, remove intersections with none-sense data.
   - [x] Ignore preferred stock & spac stock.
+- [ ] Design the the data pipeline for these data.
 
 ### Organizing & Visualizing data
 
