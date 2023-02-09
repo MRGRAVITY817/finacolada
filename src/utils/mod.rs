@@ -1,5 +1,7 @@
 use chrono::NaiveDate;
 
+pub const FINACOLADA_USER_AGENT: &'static str =  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36";
+
 pub fn parse_to_naive_date(str_date: &str) -> anyhow::Result<NaiveDate> {
     if str_date.len().ne(&8) {
         return Err(anyhow::Error::msg(
