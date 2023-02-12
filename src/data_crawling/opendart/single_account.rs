@@ -26,9 +26,9 @@ async fn get_single_account_info(
 
 #[cfg(test)]
 mod test {
-    use super::*;
-    use crate::data_crawling::opendart::business_report::REPORT_CODE_FIRST_QUARTER;
-    use insta::assert_snapshot;
+    use {
+        super::*, crate::data_crawling::opendart::REPORT_CODE_FIRST_QUARTER, insta::assert_snapshot,
+    };
 
     fn api_key() -> Result<String, std::env::VarError> {
         std::env::var("OPENDART_API_KEY")

@@ -1,10 +1,5 @@
 use crate::utils::FINACOLADA_USER_AGENT;
 
-pub const REPORT_CODE_FIRST_QUARTER: &'static str = "11013";
-pub const REPORT_CODE_SEMI_ANNUAL: &'static str = "11012";
-pub const REPORT_CODE_THRID_QUARTER: &'static str = "11014";
-pub const REPORT_CODE_ANNUAL: &'static str = "11011";
-
 async fn get_business_report(
     query_client: &reqwest::Client,
     api_key: &str,
@@ -31,7 +26,11 @@ async fn get_business_report(
 
 #[cfg(test)]
 mod test {
-    use {super::*, insta::assert_snapshot};
+    use {
+        super::*,
+        crate::data_crawling::opendart::{REPORT_CODE_FIRST_QUARTER, REPORT_CODE_SEMI_ANNUAL},
+        insta::assert_snapshot,
+    };
 
     fn api_key() -> Result<String, std::env::VarError> {
         std::env::var("OPENDART_API_KEY")
