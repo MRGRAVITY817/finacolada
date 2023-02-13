@@ -14,23 +14,27 @@ pub fn merge_sector_individual(
         .filter(col("issue_name").str().contains("스팩")) // filter out spac company
         .filter(col("issue_code").str().contains("0$")) // remove preferred stock (code ends with zero)
         .collect()?;
-
+    // 3. Save as parquet file
     let mut file = std::fs::File::create(output_path)?;
     ParquetWriter::new(&mut file).finish(&mut merged)?;
 
     Ok(())
 }
 
+pub fn get_tickers() -> anyhow::Result<()> {
+    todo!()
+}
+
 #[cfg(test)]
 mod test {
     use {super::*, insta::assert_snapshot};
 
-    // #[test]
-    // fn get_ten_tickers() {
-    //     let result = get_ticker_list().unwrap();
+    #[test]
+    fn get_ten_tickers() {
+        let result = get_tickers().unwrap();
 
-    //    assert_snapshot!(result, @"")
-    // }
+        assert_snapshot!(result[0..10], @"")
+    }
 
     #[test]
     fn merged_table_should_not_contain_esoteric_issues() {
