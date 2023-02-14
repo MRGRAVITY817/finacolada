@@ -24,3 +24,4 @@ zip = "0.6.4"
 
 [dev-dependencies]
 insta = { version = "1", features = ["yaml"] }
+rstest = "0.16.0"

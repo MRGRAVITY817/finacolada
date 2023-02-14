@@ -42,7 +42,7 @@ mod test {
         // Act
         let result = get_latest_biz_day(&client).await.unwrap();
         // Assert
-        assert_snapshot!(result, @"20230209");
+        assert_snapshot!(result, @"20230210");
         assert_eq!(result.len(), 8);
         assert!(NaiveDate::from_ymd_opt(
             result[0..4].parse::<i32>().unwrap(),

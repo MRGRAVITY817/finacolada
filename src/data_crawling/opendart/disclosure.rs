@@ -69,7 +69,7 @@ mod test {
                 .await
                 .unwrap();
 
-        assert_snapshot!(result, @r###"{"status":"000","message":"정상","page_no":1,"page_count":3,"total_count":15273,"total_page":5091,"list":[{"corp_code":"00267331","corp_name":"다올자산운용","stock_code":"","corp_cls":"E","report_nm":"[기재정정]증권신고서(집합투자증권-신탁형)(다올지수연계증권투자신탁KSE-216호(온라인전용)[ELS-파생형])","rcept_no":"20230208000039","flr_nm":"다올자산운용","rcept_dt":"20230208","rm":""},{"corp_code":"00267331","corp_name":"다올자산운용","stock_code":"","corp_cls":"E","report_nm":"증권신고서(집합투자증권-신탁형)(다올지수연계증권투자신탁KSE-216호(온라인전용)[ELS-파생형])","rcept_no":"20230127000429","flr_nm":"다올자산운용","rcept_dt":"20230127","rm":"정"},{"corp_code":"00267331","corp_name":"다올자산운용","stock_code":"","corp_cls":"E","report_nm":"[기재정정]증권신고서(집합투자증권-신탁형)(다올지수연계증권투자신탁NSE-215호(온라인전용)[ELS-파생형])","rcept_no":"20230208000033","flr_nm":"다올자산운용","rcept_dt":"20230208","rm":""}]}"###)
+        assert_snapshot!(result, @r###"{"status":"000","message":"정상","page_no":1,"page_count":3,"total_count":15294,"total_page":5098,"list":[{"corp_code":"00243553","corp_name":"신한자산운용","stock_code":"","corp_cls":"E","report_nm":"[기재정정]일괄신고서(집합투자증권-신탁형)(신한더드림러시아증권자투자신탁제1호[주식])","rcept_no":"20230208000151","flr_nm":"신한자산운용","rcept_dt":"20230208","rm":""},{"corp_code":"00243553","corp_name":"신한자산운용","stock_code":"","corp_cls":"E","report_nm":"[기재정정]일괄신고서(집합투자증권-신탁형)(신한SHAI네오(NEO)자산배분증권투자신탁(H)[주식혼합-재간접형])","rcept_no":"20230208000188","flr_nm":"신한자산운용","rcept_dt":"20230208","rm":""},{"corp_code":"00243553","corp_name":"신한자산운용","stock_code":"","corp_cls":"E","report_nm":"[기재정정]일괄신고서(집합투자증권-신탁형)(신한중국본토증권자투자신탁(UH)[주식])","rcept_no":"20230208000200","flr_nm":"신한자산운용","rcept_dt":"20230208","rm":""}]}"###)
     }
 
     #[tokio::test]

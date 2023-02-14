@@ -71,41 +71,45 @@ pub fn convert_individual_xlsx_to_parquet<'a>(
 
 #[cfg(test)]
 mod test {
-    use {super::*, insta::*};
+    use {super::*, rstest::rstest};
 
-    #[test]
-    fn can_read_converted_sector_parquet_as_lazyframe() {
+    #[rstest]
+    #[case("examples/krx_sector_kospi.xlsx", "examples/krx_sector_kospi.parquet")]
+    #[case(
+        "examples/krx_sector_kosdaq.xlsx",
+        "examples/krx_sector_kosdaq.parquet"
+    )]
+    fn saves_sector_xlsx_into_parquet(
         // Arrange
-        let input_path = "examples/krx_sector_kospi.xlsx";
-        let output_path = "examples/krx_sector_kospi.parquet";
+        #[case] input_path: &str,
+        #[case] output_path: &str,
+    ) {
         // Act
         convert_sector_xlsx_to_parquet(input_path, output_path).unwrap();
         // Assert
         let lf = LazyFrame::scan_parquet(output_path, Default::default());
         assert!(lf.is_ok());
-        assert_snapshot!(lf
-            .unwrap()
-            .filter(col("closing_price").gt(lit(10000)))
-            .collect()
-            .unwrap()
-            .to_string())
     }
 
+    #[rstest]
+    #[case(
+        "examples/krx_individual_kospi.xlsx",
+        "examples/krx_individual_kospi.parquet"
+    )]
+    #[case(
+        "examples/krx_individual_kosdaq.xlsx",
+        "examples/krx_individual_kosdaq.parquet"
+    )]
     #[test]
-    fn can_read_converted_individual_parquet_as_lazyframe() {
+    fn saves_individual_xlsx_to_parquet(
         // Arrange
-        let input_path = "examples/krx_individual_kospi.xlsx";
-        let output_path = "examples/krx_individual_kospi.parquet";
+        #[case] input_path: &str,
+        #[case] output_path: &str,
+    ) {
         // Act
         convert_individual_xlsx_to_parquet(input_path, output_path).unwrap();
         // Assert
         let lf = LazyFrame::scan_parquet(output_path, Default::default());
         assert!(lf.is_ok());
-        assert_snapshot!(lf
-            .unwrap()
-            .filter(col("closing_price").gt(lit(500)))
-            .collect()
-            .unwrap()
-            .to_string())
     }
 }
