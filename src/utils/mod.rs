@@ -1,4 +1,5 @@
 use chrono::NaiveDate;
+use polars::prelude::*;
 
 pub const FINACOLADA_USER_AGENT: &'static str =  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36";
 
@@ -14,6 +15,13 @@ pub fn parse_to_naive_date(str_date: &str) -> anyhow::Result<NaiveDate> {
         str_date[6..8].parse::<u32>()?,
     )
     .ok_or(anyhow::Error::msg("Cannot parse to date."))
+}
+
+pub fn save_df_as_parquet(output_path: &str, df: &mut DataFrame) -> anyhow::Result<()> {
+    let mut file = std::fs::File::create(output_path)?;
+    ParquetWriter::new(&mut file).finish(df)?;
+
+    Ok(())
 }
 
 #[cfg(test)]
