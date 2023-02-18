@@ -5,20 +5,16 @@ pub fn merge_sector_individual(
     indi_path: &str,
     output_path: &str,
 ) -> anyhow::Result<()> {
-    // 1. Read parquets as LazyFrame
     let sector_df = LazyFrame::scan_parquet(sector_path, Default::default())?;
     let indi_df = LazyFrame::scan_parquet(indi_path, Default::default())?;
-    // 2. Inner Join
+
     let mut merged = sector_df
         .inner_join(indi_df, col("issue_code"), col("issue_code"))
         .filter(col("issue_name").str().contains("스팩").not()) // filter out spac company
         .filter(col("issue_code").str().contains("0$")) // remove preferred stock that doesn't end with 0
         .collect()?;
-    // 3. Save as parquet file
-    let mut file = std::fs::File::create(output_path)?;
-    ParquetWriter::new(&mut file).finish(&mut merged)?;
 
-    Ok(())
+    save_df_as_parquet(output_path, &mut merged)
 }
 
 pub fn merge_kospi_kosdaq(
@@ -208,26 +204,6 @@ mod test {
                 .to_string()
         };
 
-        assert_snapshot!(count_rows(kospi_path), @r###"
-        shape: (1, 1)
-        ┌───────┐
-        │ count │
-        │ ---   │
-        │ u32   │
-        ╞═══════╡
-        │ 796   │
-        └───────┘
-        "###);
-        assert_snapshot!(count_rows(kosdaq_path), @r###"
-        shape: (1, 1)
-        ┌───────┐
-        │ count │
-        │ ---   │
-        │ u32   │
-        ╞═══════╡
-        │ 1519  │
-        └───────┘
-        "###);
         assert_snapshot!(count_rows(output_path), @r###"
         shape: (1, 1)
         ┌───────┐

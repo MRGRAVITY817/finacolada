@@ -1,3 +1,5 @@
+use crate::utils::save_df_as_parquet;
+
 use {
     crate::utils::FINACOLADA_USER_AGENT,
     polars::{
@@ -30,10 +32,8 @@ fn save_corp_code_list(output_path: &str, corp_code_list: &[CorpCodeItem]) -> an
         "stock_code" => corp_code_list.into_iter().map(|item| item.stock_code.clone()).collect::<Vec<String>>(),
         "modify_date" => corp_code_list.into_iter().map(|item| item.modify_date.clone()).collect::<Vec<String>>(),
     ]?;
-    let mut file = std::fs::File::create(output_path)?;
-    ParquetWriter::new(&mut file).finish(&mut df)?;
 
-    Ok(())
+    save_df_as_parquet(output_path, &mut df)
 }
 
 async fn save_corp_codes_xml(

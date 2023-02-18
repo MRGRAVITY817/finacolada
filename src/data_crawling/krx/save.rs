@@ -1,3 +1,5 @@
+use crate::utils::save_df_as_parquet;
+
 use {
     super::{KrxIndividualRow, KrxSectorRow},
     calamine::{open_workbook, DeError, RangeDeserializerBuilder, Reader, Xlsx},
@@ -6,7 +8,7 @@ use {
 
 pub fn convert_sector_xlsx_to_parquet<'a>(
     input_xlsx_path: &'a str,
-    output_parquet_path: &'a str,
+    output_path: &'a str,
 ) -> anyhow::Result<()> {
     let mut workbook: Xlsx<_> = open_workbook(input_xlsx_path)?;
     let range = workbook
@@ -28,15 +30,12 @@ pub fn convert_sector_xlsx_to_parquet<'a>(
         "market_cap" => table.iter().map(|row| row.7).collect::<Vec<_>>()
     )?;
 
-    let mut file = std::fs::File::create(output_parquet_path)?;
-    ParquetWriter::new(&mut file).finish(&mut df)?;
-
-    Ok(())
+    save_df_as_parquet(output_path, &mut df)
 }
 
 pub fn convert_individual_xlsx_to_parquet<'a>(
     input_xlsx_path: &'a str,
-    output_parquet_path: &'a str,
+    output_path: &'a str,
 ) -> anyhow::Result<()> {
     let mut workbook: Xlsx<_> = open_workbook(input_xlsx_path)?;
     let range = workbook
@@ -63,10 +62,7 @@ pub fn convert_individual_xlsx_to_parquet<'a>(
         "dyr" => table.iter().map(|row| row.12).collect::<Vec<_>>()
     )?;
 
-    let mut file = std::fs::File::create(output_parquet_path)?;
-    ParquetWriter::new(&mut file).finish(&mut df)?;
-
-    Ok(())
+    save_df_as_parquet(output_path, &mut df)
 }
 
 #[cfg(test)]

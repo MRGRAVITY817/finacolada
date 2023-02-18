@@ -1,3 +1,5 @@
+use crate::utils::save_df_as_parquet;
+
 use {
     super::biz_day::get_latest_biz_day, polars::prelude::*, serde::Deserialize, serde_json::Value,
 };
@@ -58,7 +60,10 @@ pub async fn get_daily_wics_list(
     Ok(row_list)
 }
 
-pub async fn get_latest_wisc_data(query_client: &reqwest::Client) -> anyhow::Result<String> {
+pub async fn get_latest_wisc_data(
+    query_client: &reqwest::Client,
+    output_path: &str,
+) -> anyhow::Result<()> {
     // 1. Get WICS data for every sector codes
     let date = get_latest_biz_day(query_client).await?;
     // 2. Deserialize all WICS data
@@ -80,12 +85,8 @@ pub async fn get_latest_wisc_data(query_client: &reqwest::Client) -> anyhow::Res
       "top60" => wics_list.iter().map(|wics| wics.top60).collect::<Vec<_>>(),
       "apt_shr_cnt" => wics_list.iter().map(|wics| wics.apt_shr_cnt).collect::<Vec<_>>()
     )?;
-    // 5. Save DataFrame as parquet file
-    let file_name = "assets/wics/latest_wics_data.parquet";
-    let mut file = std::fs::File::create(file_name)?;
-    ParquetWriter::new(&mut file).finish(&mut df)?;
-    // 6. Return the parquet file name
-    Ok(file_name.to_string())
+    // 4. Save DataFrame as parquet file
+    save_df_as_parquet(output_path, &mut df)
 }
 
 #[cfg(test)]
@@ -133,10 +134,11 @@ mod test {
     async fn can_read_wics_parquet_as_lazyframe() {
         // Arrange
         let client = reqwest::Client::new();
+        let output_path = "examples/latest_wics_data.parquet";
         // Act
-        let result = get_latest_wisc_data(&client).await.unwrap();
+        get_latest_wisc_data(&client, output_path).await.unwrap();
         // Assert
-        let lf = LazyFrame::scan_parquet(&result, Default::default());
+        let lf = LazyFrame::scan_parquet(output_path, Default::default());
         assert!(lf.is_ok());
         assert_snapshot!(lf
             .unwrap()
@@ -150,23 +152,23 @@ mod test {
         │ ---    ┆ ---                     ┆ ---         ┆ ---    ┆     ┆ ---                ┆ --- ┆ ---   ┆ ---         │
         │ str    ┆ str                     ┆ u64         ┆ str    ┆     ┆ str                ┆ i32 ┆ u32   ┆ u64         │
         ╞════════╪═════════════════════════╪═════════════╪════════╪═════╪════════════════════╪═════╪═══════╪═════════════╡
-        │ G25    ┆ WICS 경기관련소비재     ┆ 128285101   ┆ 005380 ┆ ... ┆ 경기관련소비재     ┆ 1   ┆ 9     ┆ 141021003   │
+        │ G25    ┆ WICS 경기관련소비재     ┆ 127265198   ┆ 005380 ┆ ... ┆ 경기관련소비재     ┆ 1   ┆ 9     ┆ 141021003   │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G35    ┆ WICS 건강관리           ┆ 107737004   ┆ 068270 ┆ ... ┆ 건강관리           ┆ 1   ┆ 25    ┆ 111200858   │
+        │ G35    ┆ WICS 건강관리           ┆ 105386452   ┆ 068270 ┆ ... ┆ 건강관리           ┆ 1   ┆ 25    ┆ 111211710   │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G50    ┆ WICS 커뮤니케이션서비스 ┆ 112857530   ┆ 035420 ┆ ... ┆ 커뮤니케이션서비스 ┆ 1   ┆ 5     ┆ 127958286   │
+        │ G50    ┆ WICS 커뮤니케이션서비스 ┆ 108265621   ┆ 035420 ┆ ... ┆ 커뮤니케이션서비스 ┆ 1   ┆ 6     ┆ 127958286   │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G40    ┆ WICS 금융               ┆ 119143751   ┆ 105560 ┆ ... ┆ 금융               ┆ 1   ┆ 8     ┆ 314850742   │
+        │ G40    ┆ WICS 금융               ┆ 113379511   ┆ 055550 ┆ ... ┆ 금융               ┆ 1   ┆ 8     ┆ 417203593   │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
         │ ...    ┆ ...                     ┆ ...         ┆ ...    ┆ ... ┆ ...                ┆ ... ┆ ...   ┆ ...         │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G55    ┆ WICS 유틸리티           ┆ 11168144    ┆ 015760 ┆ ... ┆ 유틸리티           ┆ 1   ┆ 2     ┆ 288883835   │
+        │ G55    ┆ WICS 유틸리티           ┆ 10871318    ┆ 015760 ┆ ... ┆ 유틸리티           ┆ 1   ┆ 2     ┆ 288883835   │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G30    ┆ WICS 필수소비재         ┆ 28230983    ┆ 033780 ┆ ... ┆ 필수소비재         ┆ 1   ┆ 6     ┆ 108461073   │
+        │ G30    ┆ WICS 필수소비재         ┆ 27930015    ┆ 033780 ┆ ... ┆ 필수소비재         ┆ 1   ┆ 6     ┆ 108461073   │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G15    ┆ WICS 소재               ┆ 113210864   ┆ 051910 ┆ ... ┆ 소재               ┆ 1   ┆ 6     ┆ 45179100    │
+        │ G15    ┆ WICS 소재               ┆ 115015966   ┆ 051910 ┆ ... ┆ 소재               ┆ 1   ┆ 6     ┆ 45179100    │
         ├╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-        │ G45    ┆ WICS IT                 ┆ 520404022   ┆ 005930 ┆ ... ┆ IT                 ┆ 1   ┆ 2     ┆ 4477336913  │
+        │ G45    ┆ WICS IT                 ┆ 515264784   ┆ 005930 ┆ ... ┆ IT                 ┆ 1   ┆ 2     ┆ 4477336913  │
         └────────┴─────────────────────────┴─────────────┴────────┴─────┴────────────────────┴─────┴───────┴─────────────┘
         "###)
     }
