@@ -21,14 +21,6 @@ pub fn merge_sector_individual(
     Ok(())
 }
 
-pub fn merge_kospi_kosdaq(
-    kospi_path: &str,
-    kosdaq_path: &str,
-    output_path: &str,
-) -> anyhow::Result<()> {
-    todo!()
-}
-
 pub fn get_tickers(file_path: &str) -> anyhow::Result<Vec<String>> {
     let df = LazyFrame::scan_parquet(file_path, Default::default())?
         .select(&[col("issue_code")])
@@ -42,9 +34,39 @@ pub fn get_tickers(file_path: &str) -> anyhow::Result<Vec<String>> {
     Ok(tickers_series.iter().map(|val| val.to_string()).collect())
 }
 
+pub fn merge_kospi_kosdaq(
+    kospi_path: &str,
+    kosdaq_path: &str,
+    output_path: &str,
+) -> anyhow::Result<()> {
+    todo!()
+}
+
 #[cfg(test)]
 mod test {
     use {super::*, insta::assert_snapshot};
+
+    #[test]
+    fn number_rows_in_merged_krx_table_equals_to_sum_of_kospi_and_kosdaq() {
+        let kospi_path = "examples/krx_merged_kospi.parquet";
+        let kosdaq_path = "examples/krx_merged_kosdaq.parquet";
+        let output_path = "examples/krx_merged.parquet";
+
+        merge_kospi_kosdaq(kospi_path, kosdaq_path, output_path).unwrap();
+
+        let count_rows = |file_path: &str| -> String {
+            LazyFrame::scan_parquet(file_path, Default::default())
+                .unwrap()
+                .select(&[count()])
+                .collect()
+                .unwrap()
+                .to_string()
+        };
+
+        assert_snapshot!(count_rows(kospi_path), @"");
+        assert_snapshot!(count_rows(kosdaq_path), @"");
+        assert_snapshot!(count_rows(output_path), @"");
+    }
 
     #[test]
     fn get_latest_tickers() {
