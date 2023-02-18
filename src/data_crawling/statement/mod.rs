@@ -1,10 +1,8 @@
-use crate::utils::save_df_as_parquet;
-
 mod constants;
 mod test_mock;
 
 use {
-    crate::utils::FINACOLADA_USER_AGENT,
+    crate::utils::{save_df_as_parquet, FINACOLADA_USER_AGENT},
     polars::{prelude::*, series::Series},
     scraper::{ElementRef, Html, Selector},
     std::{collections::HashMap, num::ParseIntError},

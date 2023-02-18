@@ -95,7 +95,11 @@ pub async fn get_latest_krx_data(
         "assets/krx/kosdaq_sector_individual.parquet",
     )?;
 
-    Ok(())
+    merge_kospi_kosdaq(
+        "assets/krx/kospi_sector_individual.parquet",
+        "assets/krx/kosdaq_sector_individual.parquet",
+        format!("assets/krx/krx_merged_{trading_date}.parquet").as_str(),
+    )
 }
 
 pub enum InfoType {
