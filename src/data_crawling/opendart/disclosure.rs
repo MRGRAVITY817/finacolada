@@ -69,7 +69,7 @@ mod test {
                 .await
                 .unwrap();
 
-        assert_snapshot!(result, @r###"{"status":"000","message":"정상","page_no":1,"page_count":3,"total_count":15380,"total_page":5127,"list":[{"corp_code":"00380942","corp_name":"이스트스프링자산운용코리아","stock_code":"","corp_cls":"E","report_nm":"증권발행실적보고서(집합투자증권)(이스트스프링업종일등ESG증권자투자신탁[주식])","rcept_no":"20230207000246","flr_nm":"이스트스프링자산운용코리아","rcept_dt":"20230207","rm":""},{"corp_code":"00380942","corp_name":"이스트스프링자산운용코리아","stock_code":"","corp_cls":"E","report_nm":"증권발행실적보고서(집합투자증권)(이스트스프링K단기채알파증권투자신탁[채권혼합])","rcept_no":"20230207000232","flr_nm":"이스트스프링자산운용코리아","rcept_dt":"20230207","rm":""},{"corp_code":"00331478","corp_name":"우리자산운용","stock_code":"","corp_cls":"E","report_nm":"증권발행실적보고서(집합투자증권)(우리지수연계증권투자신탁KSE-17호[ELS-파생형])","rcept_no":"20230208000485","flr_nm":"우리자산운용","rcept_dt":"20230208","rm":""}]}"###)
+        assert_snapshot!(result, @r###"{"status":"000","message":"정상","page_no":1,"page_count":3,"total_count":15391,"total_page":5131,"list":[{"corp_code":"00324548","corp_name":"한국투자신탁운용","stock_code":"","corp_cls":"E","report_nm":"증권신고서(집합투자증권-신탁형)(한국투자만기가있는채권형ETF증권투자신탁(채권-재간접형))","rcept_no":"20230208000563","flr_nm":"한국투자신탁운용","rcept_dt":"20230208","rm":""},{"corp_code":"01669226","corp_name":"한화위탁관리부동산투자회사","stock_code":"","corp_cls":"E","report_nm":"증권신고서(집합투자증권-회사형)(한화위탁관리부동산투자회사(주))","rcept_no":"20230206000423","flr_nm":"한화위탁관리부동산투자회사","rcept_dt":"20230206","rm":"정"},{"corp_code":"01716481","corp_name":"한국캐피탈제오차유동화전문유한회사","stock_code":"","corp_cls":"E","report_nm":"자산유동화계획의등록신청서(유동화전문회사)","rcept_no":"20230208000195","flr_nm":"한국캐피탈제오차유동화전문유한회사","rcept_dt":"20230208","rm":"정"}]}"###)
     }
 
     #[tokio::test]
